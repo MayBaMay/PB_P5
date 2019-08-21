@@ -1,14 +1,14 @@
 import requests
 import json
 
-import * from config
+from models.config import *
+
 
 def get_categories():
-    for category in CATEGORIES :
-        url = 'https://fr.openfoodfacts.org/categories' + category + '.json'
-        data = requests.get(url).json()
-        with open('data/categories.json', 'w') as f:
-            f.write(json.dumps(data, indent=4))
+    url = 'https://fr.openfoodfacts.org/categories.json'
+    data = requests.get(url).json()
+    with open('data/categories.json', 'w') as f:
+        f.write(json.dumps(data, indent=4))
 
 def get_products(categorie):
     url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='\
@@ -20,4 +20,4 @@ def get_products(categorie):
 
 
 if __name__ == "__main__":
-    get_products('chocolat')
+    get_categories()
