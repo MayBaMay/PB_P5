@@ -24,3 +24,4 @@ dbstruc.create_tables()
 
 insert_sql = insert_db_PB.DbInsert(dbauth)
 insert_sql.insert_categories()
+insert_sql.insert_products()

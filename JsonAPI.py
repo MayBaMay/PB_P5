@@ -24,13 +24,12 @@ def get_categories():
         # load products
         for name, urlname in CATEGORIES.items():
             url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='\
-                    + urlname + '&json=1'
+                    + urlname + '&page_size=20&purchase_places=France&json=1'
             data = requests.get(url).json()
             file = 'data/Products_' + name + '.json'
             with open(file, 'w') as f:
                 f.write(json.dumps(data, indent=4))
 
 
-
 if __name__ == "__main__":
-    get_categories()
+    pass

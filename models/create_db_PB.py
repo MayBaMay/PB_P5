@@ -59,6 +59,21 @@ class DbCreate:
             "   ENGINE = InnoDB"
         )
 
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Products` ("
+            "   `num` INT NOT NULL AUTO_INCREMENT,"
+            "   `id` VARCHAR(80) NOT NULL,"
+            "   `product_name` VARCHAR(80) NOT NULL,"
+            "   `nutrition_grade_fr` CHAR(1) NOT NULL,"
+            "   `brands` VARCHAR(80) NOT NULL,"
+            "   `stores` VARCHAR(80) NULL,"
+            "   `url` VARCHAR(255) NOT NULL,"
+            "   `id_categorie` VARCHAR(60) NOT NULL,"
+            "   PRIMARY KEY (`num`))"
+            "   ENGINE = InnoDB"
+        )
+
+
     def drop(self):
         """
         Drop tables in dbPurBeurre.
