@@ -24,12 +24,13 @@ def get_datas():
 
         # load products
         for name, urlname in CATEGORIES.items():
-            url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='\
-                    + urlname + '&purchase_places=France&json=1'
-            data = requests.get(url).json()
-            file = 'data/Products_' + name + '.json'
-            with open(file, 'w') as f:
-                f.write(json.dumps(data, indent=4))
+            for i in range (1,6):
+                url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='\
+                        + urlname + '&purchase_places=France&page=' + str(i) +'&json=1'
+                data = requests.get(url).json()
+                file = 'data/Products_' + name + str(i) + '.json'
+                with open(file, 'w') as f:
+                    f.write(json.dumps(data, indent=4))
 
 
 if __name__ == "__main__":
