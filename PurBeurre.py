@@ -19,7 +19,6 @@ dbauth.connect()
 
 dbstruc = create_db_PB.DbCreate(dbauth)
 dbstruc.drop()
-dbstruc.create_database()
 dbstruc.create_tables()
 
 insert_sql = insert_db_PB.DbInsert(dbauth)

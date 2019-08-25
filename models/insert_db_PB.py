@@ -2,7 +2,7 @@
 # coding: utf-8
 
 """
-This module manage MySQL database.
+This module manage insertion database.
 """
 
 import mysql.connector

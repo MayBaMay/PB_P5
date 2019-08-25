@@ -2,7 +2,7 @@
 # coding: utf-8
 
 """
-This module manage MySQL database.
+This module manage creation of tables database.
 """
 
 import mysql.connector
@@ -18,28 +18,6 @@ class DbCreate:
     def __init__(self, dbauth):
         self.connect = dbauth
 
-    def test_database(self):
-        """
-        Test if database is created
-        """
-        cursor = self.connect.create_cursor()
-        cursor.execute(
-            "SELECT SCHEMA_NAME "
-            "FROM INFORMATION_SCHEMA.SCHEMATA "
-            "WHERE SCHEMA_NAME = 'dbPurBeurre'"
-        )
-        return cursor
-
-    def create_database(self):
-        """
-        Create database dbPurBeurre
-        """
-        cursor = self.connect.create_cursor()
-        cursor.execute(
-            "CREATE DATABASE IF NOT EXISTS dbPurBeurre "
-            "CHARACTER SET utf8mb4 "
-            "COLLATE utf8mb4_unicode_ci"
-        )
 
     def create_tables(self):
         """
@@ -67,6 +45,7 @@ class DbCreate:
             "   `brands` VARCHAR(80) NULL,"
             "   `stores` VARCHAR(80) NOT NULL,"
             "   `url` VARCHAR(255) NOT NULL,"
+            "   `favoris` DATE NULL,"
             "   PRIMARY KEY (`id`))"
             "   ENGINE = InnoDB"
         )
