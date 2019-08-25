@@ -12,7 +12,7 @@ from models.config import *
 
 
 
-JsonAPI.get_categories()
+JsonAPI.get_datas()
 
 dbauth = auth_db_PB.DbAuth()
 dbauth.connect()

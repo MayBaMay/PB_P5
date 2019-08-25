@@ -52,21 +52,21 @@ class DbCreate:
             "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Categories` ("
             "   `num` INT NOT NULL AUTO_INCREMENT,"
             "   `id` VARCHAR(80) NOT NULL,"
-            "   `name` VARCHAR(80),"
-            "   `url` VARCHAR(255),"
-            "   `products` INT,"
+            "   `name` VARCHAR(80) NOT NULL,"
+            "   `url` VARCHAR(255) NOT NULL,"
+            "   `products` INT NULL,"
             "   PRIMARY KEY (`num`))"
             "   ENGINE = InnoDB"
         )
 
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Products` ("
+            "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Produits` ("
             "   `num` INT NOT NULL AUTO_INCREMENT,"
             "   `id` VARCHAR(80) NOT NULL,"
             "   `product_name` VARCHAR(80) NOT NULL,"
             "   `nutrition_grade_fr` CHAR(1) NOT NULL,"
-            "   `brands` VARCHAR(80) NOT NULL,"
-            "   `stores` VARCHAR(80) NULL,"
+            "   `brands` VARCHAR(80) NULL,"
+            "   `stores` VARCHAR(80) NOT NULL,"
             "   `url` VARCHAR(255) NOT NULL,"
             "   `id_categorie` VARCHAR(60) NOT NULL,"
             "   PRIMARY KEY (`num`))"
@@ -80,8 +80,10 @@ class DbCreate:
         """
         cursor = self.connect.create_cursor()
         queries = (
+            ("USE dbPurBeurre"),
             ("SET foreign_key_checks = 0"),
-            ("DROP DATABASE IF EXISTS `dbPurBeurre`")
+            ("DROP TABLE IF EXISTS Categories"),
+            ("DROP TABLE IF EXISTS Produits")
         )
 
         for query in queries:

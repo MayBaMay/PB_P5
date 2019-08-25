@@ -12,9 +12,10 @@ def check_data():
         os.mkdir(path + "/data")
         return False
 
-def get_categories():
+def get_datas():
     if check_data() == False :
 
+        print("Récupération des données")
         # load categories
         url = 'https://fr.openfoodfacts.org/categories.json'
         data = requests.get(url).json()
@@ -24,7 +25,7 @@ def get_categories():
         # load products
         for name, urlname in CATEGORIES.items():
             url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='\
-                    + urlname + '&page_size=20&purchase_places=France&json=1'
+                    + urlname + '&purchase_places=France&json=1'
             data = requests.get(url).json()
             file = 'data/Products_' + name + '.json'
             with open(file, 'w') as f:
@@ -32,4 +33,4 @@ def get_categories():
 
 
 if __name__ == "__main__":
-    pass
+    get_datas()
