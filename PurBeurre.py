@@ -9,27 +9,33 @@ from models.create_db_PB import DbCreate
 from models.JsonAPI import Json
 from models.insert_db_PB import DbInsert
 from models.sort_datas import Sorted_datas
+from models.read_db_PB import DbRead
+from models.print import Print
 from models.config import *
 
 
 
 jload = Json()
 dbauth = auth_db_PB.DbAuth()
-insert = DbInsert(dbauth)
-
 dbauth.connect()
 
-dbstruc = DbCreate(dbauth)
-dbstruc.drop()
-dbstruc.create_tables()
+if jload.first == True :
+    insert = DbInsert(dbauth)
 
-sort = Sorted_datas(dbauth)
-jload.get_products(sort.categories_info)
+    dbstruc = DbCreate(dbauth)
+    dbstruc.drop()
+    dbstruc.create_tables()
 
-insert.insert_categories(sort.final_cat)
+    sort = Sorted_datas(dbauth)
+    jload.get_products(sort.categories_info)
 
-sort.filtered_products()
-insert.insert_products(sort.products_infos_list)
+    insert.insert_categories(sort.final_cat)
 
-sort.get_cat_per_prod()
-insert.insert_prod_cat(sort.asso)
+    sort.filtered_products()
+    insert.insert_products(sort.products_infos_list)
+
+    sort.get_cat_per_prod()
+    insert.insert_prod_cat(sort.asso)
+
+read = DbRead(dbauth)
+read.get_categories()

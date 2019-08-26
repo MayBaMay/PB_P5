@@ -47,7 +47,7 @@ class Json:
 
         if self.first == True:
 
-            print("Récupération des products")
+            print("Récupération des produits")
 
             for name, urlnames in categories_info.items():
                 for i in range (1, (NB_PAGES+1)):

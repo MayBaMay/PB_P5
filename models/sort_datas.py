@@ -27,15 +27,13 @@ class Sorted_datas:
 
     def filtered_categories(self):
 
-        print("sorting products before insert databes...")
+        print("tri des catégories avant insertion dans base de donnée..")
 
         with open("data/categories.json", "r", encoding="utf8") as data:
             data_json = json.load(data)
             final_cat = []
             for item in data_json["tags"] :
                 self.list_filtered_cat.append(item)
-
-        print("sorting categories before insert in databe...")
 
         i = 0
         for cat in self.list_filtered_cat :
@@ -61,7 +59,7 @@ class Sorted_datas:
 
     def filtered_products(self):
 
-        print("sorting products before insert databe...")
+        print("tri des produits avant insertion dans base de donnée...")
         for name in self.categories_info.keys() :
             for i in range (1,(NB_PAGES + 1)):
                 file = 'data/Products_' + name + str(i) +'.json'
@@ -110,7 +108,6 @@ class Sorted_datas:
                 name_cat_query = "SELECT num FROM Categories WHERE id = %s"
                 cursor.execute(name_cat_query, (cat_id,))
                 data = cursor.fetchone()
-                print(data)
                 if data != None :
                     n.append(data[0])
             self.categories_num_list.append(n)

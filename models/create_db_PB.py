@@ -39,14 +39,15 @@ class DbCreate:
 
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Produits` ("
-            "   `id` VARCHAR(80) NOT NULL,"
+            "   `num` INT UNSIGNED AUTO_INCREMENT,"
+            "   `id` VARCHAR(80) NOT NULL UNIQUE,"
             "   `product_name` VARCHAR(80) NOT NULL,"
             "   `nutrition_grade_fr` CHAR(1) NOT NULL,"
             "   `brands` VARCHAR(80) NULL,"
             "   `stores` VARCHAR(80) NOT NULL,"
             "   `url` VARCHAR(255) NOT NULL,"
             "   `favoris` DATE NULL,"
-            "   PRIMARY KEY (`id`))"
+            "   PRIMARY KEY (`num`, `id`))"
             "   ENGINE = InnoDB"
         )
 
