@@ -4,23 +4,32 @@
 import os
 import sys
 
-import JsonAPI
 import models.auth_db_PB as auth_db_PB
-from models import create_db_PB
-from models import insert_db_PB
+from models.create_db_PB import DbCreate
+from models.JsonAPI import Json
+from models.insert_db_PB import DbInsert
+from models.sort_datas import Sorted_datas
 from models.config import *
 
 
 
-JsonAPI.get_datas()
-
+jload = Json()
 dbauth = auth_db_PB.DbAuth()
+insert = DbInsert(dbauth)
+
 dbauth.connect()
 
-dbstruc = create_db_PB.DbCreate(dbauth)
+dbstruc = DbCreate(dbauth)
 dbstruc.drop()
 dbstruc.create_tables()
 
-insert_sql = insert_db_PB.DbInsert(dbauth)
-insert_sql.insert_categories()
-insert_sql.insert_products()
+sort = Sorted_datas(dbauth)
+jload.get_products(sort.categories_info)
+
+insert.insert_categories(sort.final_cat)
+
+sort.filtered_products()
+insert.insert_products(sort.products_infos_list)
+
+sort.get_cat_per_prod()
+insert.insert_prod_cat(sort.asso)
