@@ -58,6 +58,9 @@ class Print:
             print("\n")
             return rep
 
+    @staticmethod
+    def final_product_choice():
+        print("Vous avez choisi le produit suivant : ")
 
 
     @staticmethod
@@ -93,4 +96,8 @@ class Print:
             print(" \n")
 
         if type =='show_substitute' :
-            pass
+            print("{:^4}   {:50}   {:^10}".format('n°', 'nom', 'nutriscore'))
+            print("{:^4}   {:50}   {:^10}".format('-'*4, '-'*50, '-'*10))
+            for row in data :
+                print("{:^4}   {:50}   {:^10}".format(row[0],row[1], row[6]))
+            print(" \n")
