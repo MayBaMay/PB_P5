@@ -39,7 +39,7 @@ class Print:
             print("\n")
             try :
                 repint = int(rep)
-                if repint not in range(1, NB_CATEGORIES) :
+                if repint not in range(1, NB_CATEGORIES+1) :
                     print("Valeur incorrecte")
                 else :
                     return rep
@@ -53,14 +53,12 @@ class Print:
         loop = True
         while loop :
             print("CHOIX DU PRODUIT")
-            rep = input("Veuillez choisir un produit et entrer ici le chiffre correspondant \n \
-                (ou tapez une partie du nom pour afficher la requête) : ")
+            rep = input("Veuillez choisir un produit dans la liste et entrer ici le chiffre correspondant \n \
+                (ou tapez une partie du nom pour afficher la requête)\n \
+                (ou '§' pour revenir aux choix des catégories)\n \
+                (ou 'Q' pour quitter le programme)\n : ")
             print("\n")
             return rep
-
-    @staticmethod
-    def final_product_choice():
-        print("Vous avez choisi le produit suivant : ")
 
 
     @staticmethod
@@ -75,29 +73,29 @@ class Print:
                 print("Liste des catégories : ")
                 print(" \n")
 
-                print("{:^4}   {:100}".format('n°', 'nom'))
+                print("{:^4}   {:100}".format('N°', 'Nom'))
                 print("{:^4}   {:100}".format('-'*4, '-'*100))
                 for row in data:
                     print("{:^4} : {:100}".format(row[0], row[1]))
                 print(" \n")
 
         if type == 'categories_details' :
-            print("{:^4}   {:50}   {:100}".format('n°', 'nom', 'url'))
+            print("{:^4}   {:50}   {:100}".format('N°', 'Nom', 'Url'))
             print("{:^4}   {:50}   {:100}".format('-'*4, '-'*50, '-'*100))
             for row in data :
                 print("{:^4} : {:50} : {:100}".format(row[0],row[2], row[3]))
             print(" \n")
 
         if type == 'produis_list' :
-            print("{:^4}   {:50}   {:50}   {:^10}".format('n°', 'nom', 'catégorie', 'nutriscore'))
+            print("{:^4}   {:50}   {:50}   {:^10}".format('N°', 'Nom', 'Catégorie', 'Nutriscore'))
             print("{:^4}   {:50}   {:50}   {:^10}".format('-'*4, '-'*50, '-'*50, '-'*10))
             for row in data :
                 print("{:^4}   {:50}   {:50}   {:^10}".format(row[0],row[1], row[2], row[3]))
             print(" \n")
 
         if type =='show_substitute' :
-            print("{:^4}   {:50}   {:^10}".format('n°', 'nom', 'nutriscore'))
-            print("{:^4}   {:50}   {:^10}".format('-'*4, '-'*50, '-'*10))
+            print("Substitut trouvé : ")
             for row in data :
-                print("{:^4}   {:50}   {:^10}".format(row[0],row[1], row[6]))
+                print("N° : {}\nNom : {}\nNutriscore : {}\nMarques : {}\nPoints de vente : {}\nUrl : {}"
+                .format(row[0],row[1], row[2], row[3], row[4], row[5]))
             print(" \n")

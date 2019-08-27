@@ -103,15 +103,15 @@ class DbRead:
                             INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
                             INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
                             WHERE Categories.num =  %s\
-                                AND produits.product_name like %s\
+                                AND produits.num = %s\
                             GROUP BY Produits.id\
                             ORDER BY Produits.num\
                             ")
-                    cursor = self.get_data(query, (self.cat_choice, '%'+self.prod_choice +'%',))
+                    cursor = self.get_data(query, (self.cat_choice, self.prod_choice,))
                     data = cursor.fetchall()
                     if data != [] :
+                        print("Vous avez choisi le produit suivant : ")
                         Print.result(data, 'produis_list')
-
                     self.get_substitute()
                     break
             else :
@@ -134,12 +134,12 @@ class DbRead:
 
     def get_substitute (self):
         query = ("SELECT Produits.num,\
-                	Produits.product_name,\
-                	GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
-                  Produits.brands,\
-                  Produits.stores,\
-                  Produits.url,\
-                	Produits.nutrition_grade_fr\
+                    Produits.product_name,\
+                    Produits.nutrition_grade_fr,\
+                    Produits.brands,\
+                    Produits.stores,\
+                    Produits.url,\
+                	GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories\
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
                 INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
@@ -150,7 +150,7 @@ class DbRead:
                 ORDER BY Produits.nutrition_grade_fr\
                 LIMIT 1\
                 ")
-        cursor = self.get_data(query, (self.prod_choice, self.cat_choice))
+        cursor = self.get_data(query, (self.prod_choice, self.cat_choice,))
         data = cursor.fetchall()
         if data != [] :
             Print.result(data, 'show_substitute')
