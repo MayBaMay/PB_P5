@@ -13,13 +13,15 @@ class Print:
         loop = True
         while loop :
             print("\n")
+            print("MENU PRINCIPAL")
             print("1 - Quel aliment souhaitez vous remplacer ?")
             print("2 - Retrouver mes aliments substitués")
             print("3 - Quitter le programme")
             print("\n")
+            rep = input("Votre Choix (1, 2 ou 3): ")
             try :
-                rep = int(input("Votre Choix (1, 2 ou 3): "))
-                if rep not in [1, 2, 3] :
+                repint = int(rep)
+                if repint not in [1, 2, 3] :
                     print("Valeur incorrecte.")
                 else :
                     return rep
@@ -35,7 +37,9 @@ class Print:
         while loop :
             print("CHOIX DE LA CATÉGORIE")
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
-                (ou tapez une partie du nom pour afficher la requête) : ")
+                (ou tapez une partie du nom pour afficher la requête)\n \
+                (ou '§' pour revenir au menu principal)\n \
+                (ou 'Q' pour quitter le programme)\n : ")
             print("\n")
             try :
                 repint = int(rep)
@@ -55,10 +59,24 @@ class Print:
             print("CHOIX DU PRODUIT")
             rep = input("Veuillez choisir un produit dans la liste et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
-                (ou '§' pour revenir aux choix des catégories)\n \
+                (ou '§' pour revenir au menu principal)\n \
                 (ou 'Q' pour quitter le programme)\n : ")
             print("\n")
             return rep
+
+    @staticmethod
+    def exit() :
+        loop = True
+        while loop :
+            confirmation = str.upper(input("Êtes vous sûr de vouloir quitter ? (O=oui, N=non) : "))
+
+            if confirmation == 'O' :
+                return True
+                loop = False
+
+            elif confirmation == 'N' :
+                return False
+                loop = False
 
 
     @staticmethod
@@ -68,16 +86,15 @@ class Print:
         """
         if type == 'list_categories' :
 
-            if rep == 1 :
-                print(" \n")
-                print("Liste des catégories : ")
-                print(" \n")
+            print(" \n")
+            print("Liste des catégories : ")
+            print(" \n")
 
-                print("{:^4}   {:100}".format('N°', 'Nom'))
-                print("{:^4}   {:100}".format('-'*4, '-'*100))
-                for row in data:
-                    print("{:^4} : {:100}".format(row[0], row[1]))
-                print(" \n")
+            print("{:^4}   {:100}".format('N°', 'Nom'))
+            print("{:^4}   {:100}".format('-'*4, '-'*100))
+            for row in data:
+                print("{:^4} : {:100}".format(row[0], row[1]))
+            print(" \n")
 
         if type == 'categories_details' :
             print("{:^4}   {:50}   {:100}".format('N°', 'Nom', 'Url'))

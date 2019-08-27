@@ -20,6 +20,8 @@ class DbRead:
         self.nutriscore = ""
         self.cat_choice = ""
         self.prod_choice = ""
+        self.on = False
+
 
     def get_data(self, query, value=None):
         """
@@ -31,16 +33,28 @@ class DbRead:
         cursor.execute(query, value)
         return cursor
 
+    def exit(self):
+        return self.on
+
 
     def get_categories(self):
         query = ("SELECT categories.num, categories.name \
             FROM categories"
             )
-
         cursor = self.get_data(query)
         data = cursor.fetchall()
-        Print.result(data, 'list_categories', Print.accueil())
-        self.get_cat_choice()
+        rep = Print.accueil()
+
+        if rep == '1' :
+            Print.result(data, 'list_categories', rep)
+            self.get_cat_choice()
+
+        elif rep == '3' :
+            if Print.exit() == True :
+                self.on = False
+            else :
+                self.get_categories()
+
 
 
     def get_cat_choice(self):
@@ -54,9 +68,18 @@ class DbRead:
                 self.get_products()
                 break
 
+            elif self.cat_choice == '§' :
+                self.get_categories()
+                break
+
+            elif self.cat_choice == 'q' or self.cat_choice == 'Q' :
+                if Print.exit() == True :
+                    self.on = False
+                    break
+
             else :
                 query = ("SELECT * FROM Categories WHERE name like %s")
-                cursor = self.get_data(query, ('%'+rep +'%',))
+                cursor = self.get_data(query, ('%'+ self.cat_choice +'%',))
                 data = cursor.fetchall()
                 if data != [] :
                     Print.result(data, 'categories_details')
@@ -115,22 +138,32 @@ class DbRead:
                     self.get_substitute()
                     break
             else :
-                query = ("SELECT Produits.num,\
-                            produits.product_name,\
-                            GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
-                            Produits.nutrition_grade_fr\
-                        FROM Produits\
-                        INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                        INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
-                        WHERE Categories.num =  %s\
-                            AND produits.product_name like %s\
-                        GROUP BY Produits.id\
-                        ORDER BY Produits.num\
-                        ")
-                cursor = self.get_data(query, (self.cat_choice, '%'+self.prod_choice +'%',))
-                data = cursor.fetchall()
-                if data != [] :
-                    Print.result(data, 'produis_list')
+
+                if self.prod_choice == '§' :
+                    self.get_categories()
+                elif self.prod_choice == 'q' or self.prod_choice == 'Q' :
+                    if Print.exit() == True :
+                        self.on = False
+                        break
+                    else :
+                        self.get_products()
+                else :
+                    query = ("SELECT Produits.num,\
+                                produits.product_name,\
+                                GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
+                                Produits.nutrition_grade_fr\
+                            FROM Produits\
+                            INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                            INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                            WHERE Categories.num =  %s\
+                                AND produits.product_name like %s\
+                            GROUP BY Produits.id\
+                            ORDER BY Produits.num\
+                            ")
+                    cursor = self.get_data(query, (self.cat_choice, '%'+self.prod_choice +'%',))
+                    data = cursor.fetchall()
+                    if data != [] :
+                        Print.result(data, 'produis_list')
 
     def get_substitute (self):
         query = ("SELECT Produits.num,\

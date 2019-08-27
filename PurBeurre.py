@@ -38,4 +38,10 @@ if jload.first == True :
     insert.insert_prod_cat(sort.asso)
 
 read = DbRead(dbauth)
-read.get_categories()
+
+on = True
+
+while on == True :
+
+    read.get_categories()
+    on = read.exit()
