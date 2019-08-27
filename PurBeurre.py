@@ -43,5 +43,5 @@ on = True
 
 while on == True :
 
-    read.get_categories()
+    read.get_started()
     on = read.exit()

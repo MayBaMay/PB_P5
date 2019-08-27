@@ -37,7 +37,7 @@ class DbRead:
         return self.on
 
 
-    def get_categories(self):
+    def get_started(self):
         query = ("SELECT categories.num, categories.name \
             FROM categories"
             )
@@ -49,12 +49,14 @@ class DbRead:
             Print.result(data, 'list_categories', rep)
             self.get_cat_choice()
 
+        elif rep == '2' :
+            self.get_favoris()
+
         elif rep == '3' :
             if Print.exit() == True :
                 self.on = False
             else :
-                self.get_categories()
-
+                self.get_started()
 
 
     def get_cat_choice(self):
@@ -69,7 +71,7 @@ class DbRead:
                 break
 
             elif self.cat_choice == '§' :
-                self.get_categories()
+                self.get_started()
                 break
 
             elif self.cat_choice == 'q' or self.cat_choice == 'Q' :
@@ -140,7 +142,7 @@ class DbRead:
             else :
 
                 if self.prod_choice == '§' :
-                    self.get_categories()
+                    self.get_started()
                 elif self.prod_choice == 'q' or self.prod_choice == 'Q' :
                     if Print.exit() == True :
                         self.on = False
@@ -186,11 +188,9 @@ class DbRead:
         cursor = self.get_data(query, (self.prod_choice, self.cat_choice,))
         data = cursor.fetchall()
         num_substitut = str(data[0][0])
-        print(num_substitut)
-        print(type(num_substitut))
 
         if data == [] :
-            pass
+            print("Aucun substitut trouvé dans cette catégorie")
         else :
             Print.result(data, 'show_substitute')
             if Print.save_substitute() :
@@ -198,8 +198,27 @@ class DbRead:
                 cursor.execute(update_query, (num_substitut,))
                 self.connect.commit()
 
+        self.get_started()
 
-
+    def get_favoris(self):
+        query = ("SELECT Produits.favoris,\
+                    Produits.num,\
+                    Produits.product_name,\
+                    Produits.nutrition_grade_fr,\
+                    Produits.brands,\
+                    Produits.stores,\
+                    Produits.url,\
+                	GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories\
+                FROM Produits\
+                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                WHERE Produits.favoris IS NOT NULL\
+                GROUP BY Produits.id\
+                ORDER BY Produits.favoris DESC\
+                ")
+        cursor = self.get_data(query)
+        data = cursor.fetchall()
+        Print.result(data, 'saved_substitute')
 
 
 if __name__ == '__main__':

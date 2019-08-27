@@ -129,3 +129,10 @@ class Print:
                 print("N° : {}\nNom : {}\nNutriscore : {}\nMarques : {}\nPoints de vente : {}\nUrl : {}"
                 .format(row[0],row[1], row[2], row[3], row[4], row[5]))
             print(" \n")
+
+        if type == 'saved_substitute' :
+            print("Substituts enregistrés :")
+            for row in data :
+                print("date : {} | N° : {} | Nom : {} | Nutriscore : {} | Marques : {} | Points de vente :{} | url :{} | Catégorie :{}"
+                    .format(row[0],row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+                print(" \n")
