@@ -78,6 +78,19 @@ class Print:
                 return False
                 loop = False
 
+    @staticmethod
+    def save_substitute() :
+        loop = True
+        while loop :
+            confirmation = str.upper(input("Voulez-vous enregistrer ce substitut ? (O=oui, N=non) : "))
+
+            if confirmation == 'O' :
+                return True
+                loop = False
+
+            elif confirmation == 'N' :
+                return False
+                loop = False
 
     @staticmethod
     def result(data, type, rep=0):

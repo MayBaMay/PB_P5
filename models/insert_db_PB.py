@@ -37,7 +37,7 @@ class DbInsert:
         """
         insert products in table Produits
         """
-        
+
         print("insert products in database ")
 
         for prod in data :

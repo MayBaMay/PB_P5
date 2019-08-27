@@ -176,7 +176,7 @@ class DbRead:
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
                 INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
-                WHERE Produits.nutrition_grade_fr <\
+                WHERE Produits.nutrition_grade_fr <=\
                     (SELECT Produits.nutrition_grade_fr FROM Produits WHERE Produits.num = %s)\
                     AND Categories.num = %s\
                 GROUP BY Produits.id\
@@ -185,10 +185,20 @@ class DbRead:
                 ")
         cursor = self.get_data(query, (self.prod_choice, self.cat_choice,))
         data = cursor.fetchall()
-        if data != [] :
-            Print.result(data, 'show_substitute')
+        num_substitut = str(data[0][0])
+        print(num_substitut)
+        print(type(num_substitut))
+
+        if data == [] :
+            pass
         else :
-            print("pb")
+            Print.result(data, 'show_substitute')
+            if Print.save_substitute() :
+                update_query = ("UPDATE Produits SET favoris = CURRENT_DATE WHERE num =  %s")
+                cursor.execute(update_query, (num_substitut,))
+                self.connect.commit()
+
+
 
 
 
