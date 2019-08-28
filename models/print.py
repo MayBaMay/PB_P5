@@ -38,12 +38,12 @@ class Print:
             print("CHOIX DE LA CATÉGORIE")
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
-                (ou '§' pour revenir au menu principal)\n \
-                (ou 'Q' pour quitter le programme)\n : ")
+                (ou '-1' pour revenir au menu principal)\n \
+                (ou '0' pour quitter le programme)\n : ")
             print("\n")
             try :
                 repint = int(rep)
-                if repint not in range(1, NB_CATEGORIES+1) :
+                if repint not in range(1, NB_CATEGORIES+1) and repint not in [0,-1]:
                     print("Valeur incorrecte")
                 else :
                     return rep
@@ -59,38 +59,57 @@ class Print:
             print("CHOIX DU PRODUIT")
             rep = input("Veuillez choisir un produit dans la liste et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
-                (ou '§' pour revenir au menu principal)\n \
-                (ou 'Q' pour quitter le programme)\n : ")
+                (ou '-1' pour revenir au menu principal)\n \
+                (ou '0' pour quitter le programme)\n : ")
             print("\n")
             return rep
 
     @staticmethod
+    def back_to_categories() :
+        rep = 0
+        rep = input("Le produit sélectionné ne fait pas partie de la catégorie choisie\n \
+                Pour sélectionner une autre catégorie tapez '1' sinon tapez entrée : ")
+        print("\n")
+        return rep
+
+
+    @staticmethod
     def exit() :
-        loop = True
-        while loop :
-            confirmation = str.upper(input("Êtes vous sûr de vouloir quitter ? (O=oui, N=non) : "))
+        while True :
+            rep = input("Êtes vous sûr de vouloir quitter ? (1=oui, 2=non) : ")
+            try :
+                repint = int(rep)
+                if repint not in [1,2]:
+                    print("Valeur incorrecte")
+                else :
+                    if repint == 1 :
+                        return True
+                        break
+                    elif repint == 2 :
+                        return False
+                        break
+            except ValueError :
+                print("Valeur incorrecte")
 
-            if confirmation == 'O' :
-                return True
-                loop = False
 
-            elif confirmation == 'N' :
-                return False
-                loop = False
 
     @staticmethod
     def save_substitute() :
-        loop = True
-        while loop :
-            confirmation = str.upper(input("Voulez-vous enregistrer ce substitut ? (O=oui, N=non) : "))
-
-            if confirmation == 'O' :
-                return True
-                loop = False
-
-            elif confirmation == 'N' :
-                return False
-                loop = False
+        while True:
+            rep = input("Voulez-vous enregistrer ce substitut ? (1=oui, 2=non) : ")
+            try :
+                repint = int(rep)
+                if repint not in [1,2]:
+                    print("Valeur incorrecte")
+                else :
+                    if repint == 1 :
+                        return True
+                        break
+                    elif repint == 2 :
+                        return False
+                        break
+            except ValueError :
+                print("Valeur incorrecte")
 
     @staticmethod
     def result(data, type, rep=0):

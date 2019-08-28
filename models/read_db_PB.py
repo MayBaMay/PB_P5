@@ -21,6 +21,7 @@ class DbRead:
         self.cat_choice = ""
         self.prod_choice = ""
         self.on = False
+        self.data_cat = []
 
 
     def get_data(self, query, value=None):
@@ -43,6 +44,7 @@ class DbRead:
             )
         cursor = self.get_data(query)
         data = cursor.fetchall()
+        self.data_cat = data
         rep = Print.accueil()
 
         if rep == '1' :
@@ -64,27 +66,29 @@ class DbRead:
         while loop :
             self.cat_choice = Print.category_choice()
             if self.cat_choice.isnumeric() :
-                query = ("SELECT * FROM Categories WHERE num = %s")
-                cursor = self.get_data(query, (self.cat_choice ,))
-                data = cursor.fetchall()
-                self.get_products()
-                break
 
-            elif self.cat_choice == '§' :
-                self.get_started()
-                break
-
-            elif self.cat_choice == 'q' or self.cat_choice == 'Q' :
-                if Print.exit() == True :
-                    self.on = False
+                if self.cat_choice == '0' :
+                    if Print.exit() == True :
+                        self.on = False
+                        break
+                else :
+                    query = ("SELECT * FROM Categories WHERE num = %s")
+                    cursor = self.get_data(query, (self.cat_choice ,))
+                    data = cursor.fetchall()
+                    self.get_products()
                     break
 
             else :
-                query = ("SELECT * FROM Categories WHERE name like %s")
-                cursor = self.get_data(query, ('%'+ self.cat_choice +'%',))
-                data = cursor.fetchall()
-                if data != [] :
-                    Print.result(data, 'categories_details')
+                if self.cat_choice =='-1' :
+                    self.get_started()
+                    break
+
+                else :
+                    query = ("SELECT * FROM Categories WHERE name like %s")
+                    cursor = self.get_data(query, ('%'+ self.cat_choice +'%',))
+                    data = cursor.fetchall()
+                    if data != [] :
+                        Print.result(data, 'categories_details')
 
     def get_products(self):
         query = ("SELECT Produits.num,\
@@ -110,17 +114,31 @@ class DbRead:
             if self.prod_choice.isnumeric() :
                 # check if input is in product's numbers
                 repint = int(self.prod_choice)
-                query = ("SELECT num FROM Produits")
-                cursor = self.get_data(query)
+                query = ("SELECT Produits.num \
+                        FROM Produits \
+                        INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                        INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                        WHERE Categories.num =  %s\
+                        ")
+                cursor = self.get_data(query, (self.cat_choice,))
                 data = cursor.fetchall()
                 num_list = []
                 for num in data :
                     num_list.append(num[0])
 
-                if repint not in num_list :
-                    print("Valeur incorrecte")
+                if repint not in num_list and repint != 0 :
+                    if Print.back_to_categories() == '1':
+                        Print.result(self.data_cat, 'list_categories', '1')
+                        self.get_cat_choice()
                 else :
-                    query = ("SELECT Produits.num,\
+                    if self.prod_choice == '0' :
+                        if Print.exit() == True :
+                            self.on = False
+                            break
+                        else :
+                            self.get_products()
+                    else :
+                        query = ("SELECT Produits.num,\
                                 produits.product_name,\
                                 GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
                                 Produits.nutrition_grade_fr\
@@ -141,14 +159,9 @@ class DbRead:
                     break
             else :
 
-                if self.prod_choice == '§' :
+                if self.prod_choice == '-1' :
                     self.get_started()
-                elif self.prod_choice == 'q' or self.prod_choice == 'Q' :
-                    if Print.exit() == True :
-                        self.on = False
-                        break
-                    else :
-                        self.get_products()
+
                 else :
                     query = ("SELECT Produits.num,\
                                 produits.product_name,\
@@ -219,6 +232,7 @@ class DbRead:
         cursor = self.get_data(query)
         data = cursor.fetchall()
         Print.result(data, 'saved_substitute')
+        self.connect.commit()
 
 
 if __name__ == '__main__':
