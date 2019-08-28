@@ -4,10 +4,13 @@
 import mysql.connector
 from models.config import *
 
-""" Connecting to MySQL database"""
+"""This module manage all operations on MySQL connexion"""
 
 class DbAuth :
-    """Connect to MySQL server"""
+    """
+    This class allowed to automate all operation on the connexion
+    the connexion itself, cursor creation and commit
+    """
 
     def __init__(self):
         self.host = MYSQL_HOST
@@ -17,6 +20,7 @@ class DbAuth :
         self.PurBeurreConnect = None
 
     def connect(self):
+        """Connexion to MySQL using MySQL connector"""
         try :
             self.PurBeurreConnect = mysql.connector.connect(
                 host = self.host,
@@ -28,7 +32,9 @@ class DbAuth :
             exit()
 
     def create_cursor(self):
+        """Generate a cursor with the same connexion"""
         return self.PurBeurreConnect.cursor()
 
     def commit(self):
+        """Generate a commit with the same connexion"""
         return self.PurBeurreConnect.commit()

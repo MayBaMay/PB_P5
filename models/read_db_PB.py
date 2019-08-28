@@ -17,16 +17,15 @@ class DbRead:
 
     def __init__(self, dbauth):
         self.connect = dbauth
+        self.on = True
         self.nutriscore = ""
         self.cat_choice = ""
         self.prod_choice = ""
-        self.on = False
-        self.data_cat = []
-
+        self.categories_list = []
 
     def get_data(self, query, value=None):
         """
-        Get data from database.
+        Get data from database using methods from class instance DbAuth
         """
         cursor = self.connect.create_cursor()
         cursor.execute("USE dbPurBeurre")
@@ -35,30 +34,38 @@ class DbRead:
         return cursor
 
     def exit(self):
+        """
+        This method returns to the application if user wants to quit or continu
+        """
         return self.on
 
 
     def get_started(self):
-        query = ("SELECT categories.num, categories.name \
-            FROM categories"
-            )
-        cursor = self.get_data(query)
-        data = cursor.fetchall()
-        self.data_cat = data
-        rep = Print.accueil()
+        """
+        This method is the main menu of the application
+        """
 
-        if rep == '1' :
-            Print.result(data, 'list_categories', rep)
-            self.get_cat_choice()
+        rep = Print.menu()
+
+        if rep == '1' :  #user chose to find a substitute of a product
+            query = ("SELECT categories.num, categories.name \
+                FROM categories"
+                )
+            cursor = self.get_data(query)
+            data = cursor.fetchall()
+            self.categories_list = data
+
+            Print.result(self.categories_list, 'list_categories')  # print list of categories
+            self.get_cat_choice()  # call method to process the category's choice
 
         elif rep == '2' :
-            self.get_favoris()
+            self.get_favoris()  #user chose to see saved substitutes
 
-        elif rep == '3' :
-            if Print.exit() == True :
+        elif rep == '3' :  #user chose to quit
+            if Print.exit() == True :  # if user confirmed
                 self.on = False
             else :
-                self.get_started()
+                self.get_started()  # start again
 
 
     def get_cat_choice(self):
@@ -128,7 +135,7 @@ class DbRead:
 
                 if repint not in num_list and repint != 0 :
                     if Print.back_to_categories() == '1':
-                        Print.result(self.data_cat, 'list_categories', '1')
+                        Print.result(self.categories_list, 'list_categories')
                         self.get_cat_choice()
                 else :
                     if self.prod_choice == '0' :
@@ -231,8 +238,12 @@ class DbRead:
                 ")
         cursor = self.get_data(query)
         data = cursor.fetchall()
-        Print.result(data, 'saved_substitute')
-        self.connect.commit()
+        if data == [] :
+            print(" Vous n'avez encore enregistré aucun substitut")
+        else :
+            Print.result(data, 'saved_substitute')
+            self.get_started()
+
 
 
 if __name__ == '__main__':

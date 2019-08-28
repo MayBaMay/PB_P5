@@ -24,7 +24,6 @@ class DbInsert:
         Insert categories in table Categories
         """
 
-        print("insert categories in database")
         for category in categrories :
             cursor = self.connect.create_cursor()
             insert_query = "INSERT INTO Categories (id, name, url, products) \
@@ -33,14 +32,12 @@ class DbInsert:
             self.connect.commit()
 
 
-    def insert_products(self, data):
+    def insert_products(self, products):
         """
         insert products in table Produits
         """
 
-        print("insert products in database ")
-
-        for prod in data :
+        for prod in products :
             cursor = self.connect.create_cursor()
             insert_query = "INSERT INTO Produits (id, product_name, nutrition_grade_fr, brands, stores, url) \
             VALUES (%(id)s, %(product_name)s, %(nutrition_grade_fr)s, %(brands)s, %(stores)s, %(url)s) \
@@ -50,8 +47,10 @@ class DbInsert:
 
 
     def insert_prod_cat(self, data) :
+        """
+        Insert links between products and category in table Asso_Prod_Cat
+        """
 
-        print('insertion dans Asso_Prod_Cat...')
         cursor = self.connect.create_cursor()
         insert_CatProd_query = "INSERT INTO Asso_Prod_Cat (num_categories, id_produits) \
         VALUES (%s, %s)"

@@ -8,7 +8,7 @@ MYSQL_PASSWD = "ratatouille"
 MYSQL_DATABASE = "dbPurBeurre"
 
 # Products by categories
-NB_PRODUCT = 50
+NB_PRODUCT = 100
 PRODUCTS_PER_PAGE = 50
 
 # Number of categories

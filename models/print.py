@@ -8,7 +8,7 @@ class Print:
 
 
     @staticmethod
-    def accueil():
+    def menu():
         rep = 0
         loop = True
         while loop :
@@ -39,7 +39,7 @@ class Print:
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
                 (ou '-1' pour revenir au menu principal)\n \
-                (ou '0' pour quitter le programme)\n : ")
+                (ou '0' pour quitter le programme):\n ")
             print("\n")
             try :
                 repint = int(rep)
@@ -60,7 +60,7 @@ class Print:
             rep = input("Veuillez choisir un produit dans la liste et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
                 (ou '-1' pour revenir au menu principal)\n \
-                (ou '0' pour quitter le programme)\n : ")
+                (ou '0' pour quitter le programme): \n")
             print("\n")
             return rep
 
@@ -112,16 +112,14 @@ class Print:
                 print("Valeur incorrecte")
 
     @staticmethod
-    def result(data, type, rep=0):
+    def result(data, type):
         """
         Print data contained in Mysql request
         """
         if type == 'list_categories' :
-
             print(" \n")
             print("Liste des catégories : ")
             print(" \n")
-
             print("{:^4}   {:100}".format('N°', 'Nom'))
             print("{:^4}   {:100}".format('-'*4, '-'*100))
             for row in data:
@@ -151,6 +149,7 @@ class Print:
 
         if type == 'saved_substitute' :
             print("Substituts enregistrés :")
+            print(" \n")
             for row in data :
                 print("date : {} | N° : {} | Nom : {} | Nutriscore : {} | Marques : {} | Points de vente :{} | url :{} | Catégorie :{}"
                     .format(row[0],row[1], row[2], row[3], row[4], row[5], row[6], row[7]))

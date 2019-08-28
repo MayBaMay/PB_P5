@@ -2,7 +2,7 @@
 # coding: utf-8
 
 """
-This module manage creation of tables database.
+This module creates tables in database.
 """
 
 import mysql.connector
@@ -12,17 +12,35 @@ from models.config import *
 
 class DbCreate:
     """
-    Create database and tables structure.
+    This class reinitialize the database ant creates tables structure
     """
 
     def __init__(self, dbauth):
-        self.connect = dbauth
+        self.connect = dbauth  # database connection with class Dbauth instance
 
+
+    def drop(self):
+        """
+        Drop tables in dbPurBeurre to reinitialize the database
+        """
+        cursor = self.connect.create_cursor()
+        queries = (
+            ("USE dbPurBeurre"),
+            ("SET foreign_key_checks = 0"),
+            ("DROP TABLE IF EXISTS Asso_Prod_Cat"),
+            ("DROP TABLE IF EXISTS Categories"),
+            ("DROP TABLE IF EXISTS Produits")
+        )
+
+        for query in queries:
+            cursor.execute(query)
 
     def create_tables(self):
         """
         Create MySQL tables in dbPurBeurre database.
         """
+
+        # Uses methods from class DbAuth
         cursor = self.connect.create_cursor()
         cursor.execute("USE `dbPurBeurre`")
 
@@ -64,20 +82,3 @@ class DbCreate:
             "       REFERENCES `Produits` (`id`))"
             "   ENGINE = InnoDB"
         )
-
-
-    def drop(self):
-        """
-        Drop tables in dbPurBeurre.
-        """
-        cursor = self.connect.create_cursor()
-        queries = (
-            ("USE dbPurBeurre"),
-            ("SET foreign_key_checks = 0"),
-            ("DROP TABLE IF EXISTS Asso_Prod_Cat"),
-            ("DROP TABLE IF EXISTS Categories"),
-            ("DROP TABLE IF EXISTS Produits")
-        )
-
-        for query in queries:
-            cursor.execute(query)

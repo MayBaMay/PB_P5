@@ -1,6 +1,10 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
+"""
+This module sorts datas loaded from OpenFoodFects API
+"""
+
 import mysql.connector
 import json
 import requests
@@ -8,9 +12,14 @@ from models.config import *
 
 
 class Sorted_datas:
+    """
+    This class allowed to filter, truncate, link and get datas
+    from the API loaded datas
+    """
 
     def __init__(self, dbauth):
-        self.connect = dbauth
+        self.connect = dbauth  # database connection with class Dbauth instance
+
         self.list_filtered_cat = []
         self.final_cat = []
 
@@ -21,13 +30,10 @@ class Sorted_datas:
         self.categories_num_list = []
         self.asso = []
 
-        self.filtered_categories()
-        self.get_info_from_categories()
 
 
     def filtered_categories(self):
-
-        print("tri des catégories avant insertion dans base de donnée..")
+        """ Get categories datas in a list so they can be treated as needed"""
 
         with open("data/categories.json", "r", encoding="utf8") as data:
             data_json = json.load(data)
@@ -37,29 +43,37 @@ class Sorted_datas:
 
         i = 0
         for cat in self.list_filtered_cat :
+            # limit the number of categories to the number chosen in config
             if i < NB_CATEGORIES :
+                # limit the categories to the ones which have a lot of products
                 if cat["products"] > 10000:
                     self.final_cat.append(cat)
                     i += 1
 
         self.truncate_datas("categories")
+        self.get_info_from_categories()
 
     def get_info_from_categories(self):
+        """
+        This method get datas needed to load products pages with Json class
+        """
 
         cat_url_names = []
         cat_names = []
 
         for category in self.final_cat :
+            # get only names of categories in the url to use it for API search requests
             url = category["url"]
             url = url[39:]
             cat_url_names.append(url)
+            # get names of categories to name related files
             cat_names.append(category["name"])
+            # create a dictionnary for each category with those elements
             self.categories_info = {x:y for x,y in zip(cat_names, cat_url_names)}
 
 
     def filtered_products(self):
 
-        print("tri des produits avant insertion dans base de donnée...")
         for name in self.categories_info.keys() :
             for i in range (1,(NB_PAGES + 1)):
                 file = 'data/Products_' + name + str(i) +'.json'
@@ -81,6 +95,7 @@ class Sorted_datas:
         self.truncate_datas("products")
 
     def truncate_datas(self, type):
+        """ truncate datas to sizes defined for each element in the database"""
 
         if type == "categories":
             for cat in self.final_cat :
@@ -99,8 +114,14 @@ class Sorted_datas:
                 prod["url"] = prod['url'][:255]
 
 
-    def get_cat_per_prod(self):
-        # recovery category num from ids in Json categories_hierarchy
+    def get_categories_per_product(self):
+        """
+        This method get datas to insert in the table Asso_Prod_Cat
+        wich links products and categories
+        NB : a product can belong to more than one category
+        """
+
+        # recover categories number for each products from ids in Json categories_hierarchy
         for categories in self.categories_names_list:
             n = []
             for cat_id in categories:
@@ -112,14 +133,17 @@ class Sorted_datas:
                     n.append(data[0])
             self.categories_num_list.append(n)
 
+        # Create a dictionnary with product's id and related category's number
         i = 0
         while i < len(self.products_infos_list)-1 :
-            id =  self.products_infos_list[i]['id']
-            for nb in self.categories_num_list[i] :
+            id =  self.products_infos_list[i]['id']   #get product's id
+
+            for nb in self.categories_num_list[i] :  # get num category
                 nb = str(nb)
+
                 info_cat = (nb, id)
 
-                if info_cat not in self.asso :
+                if info_cat not in self.asso :  # check if not duplication
                     self.asso.append(info_cat)
                 else :
                     pass

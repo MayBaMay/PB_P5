@@ -1,47 +1,60 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-import os
-import sys
 
-import models.auth_db_PB as auth_db_PB
-from models.create_db_PB import DbCreate
-from models.JsonAPI import Json
-from models.insert_db_PB import DbInsert
+from models.auth_db_PB import DbAuth
+from models.JsonAPI import JsonAPI
 from models.sort_datas import Sorted_datas
+from models.create_db_PB import DbCreate
+from models.insert_db_PB import DbInsert
 from models.read_db_PB import DbRead
 from models.print import Print
 from models.config import *
 
 
+def game_on():
 
-jload = Json()
-dbauth = auth_db_PB.DbAuth()
-dbauth.connect()
+    # generate database connexion
+    dbauth = DbAuth()
+    dbauth.connect()
 
-if jload.first == True :
-    insert = DbInsert(dbauth)
+    # create a JsonAPI instance to start loading datafile
+    jload = JsonAPI()
 
-    dbstruc = DbCreate(dbauth)
-    dbstruc.drop()
-    dbstruc.create_tables()
+    if jload.first == True :  # if json files not in the repertory
 
-    sort = Sorted_datas(dbauth)
-    jload.get_products(sort.categories_info)
+        # Create instances needed for loading datas in database
+        sort = Sorted_datas(dbauth)
+        dbstruc = DbCreate(dbauth)
+        insert = DbInsert(dbauth)
 
-    insert.insert_categories(sort.final_cat)
+        # process categories datas
+        jload.get_categories()  # load json file from API
+        sort.filtered_categories()  # sort datas before insert in database
 
-    sort.filtered_products()
-    insert.insert_products(sort.products_infos_list)
+        # process products datas
+        jload.get_products(sort.categories_info) # load json file from API
+        sort.filtered_products()  # sort datas before insert in database
 
-    sort.get_cat_per_prod()
-    insert.insert_prod_cat(sort.asso)
+        dbstruc.drop()  # reinitiate database if exits
+        dbstruc.create_tables()  # create tables in database
 
-read = DbRead(dbauth)
+        insert.insert_categories(sort.final_cat)
+        insert.insert_products(sort.products_infos_list)
 
-on = True
+        # get datas for table Asso_prod_cat wich links products and categories
+        sort.get_categories_per_product()
+        insert.insert_prod_cat(sort.asso)
 
-while on == True :
+    # Generate an instance of the class DbRead to read datas in database
+    read = DbRead(dbauth)
+    on = True
 
-    read.get_started()
-    on = read.exit()
+    while on == True :
+
+        read.get_started()
+        on = read.exit()
+
+if __name__ == "__main__":
+
+    game_on()
