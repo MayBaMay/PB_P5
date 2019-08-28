@@ -5,14 +5,15 @@
 This module loads datas from Json API if not already done
 """
 
-import requests
-import json
+
 import os
+import json
+import requests
 
-from models.config import *
-
+from models.config import NB_PAGES, PRODUCTS_PER_PAGE
 
 class JsonAPI:
+    """This class generates loading datas from API"""
 
     def __init__(self):
         self.first = None
@@ -27,12 +28,13 @@ class JsonAPI:
         if os.path.isdir(path + "/data"):
             self.first = False
             print("Données actuellement dans la base")
-        else :
+        else:
             os.mkdir(path + "/data")
             self.first = True
             print("Chargement de la base de donnée, veuillez patienter ...")
 
-    def get_categories(self):
+    @staticmethod
+    def get_categories():
         """
         This method loads categories from OpenFoodFacts API
         and create a json file with datas
@@ -40,11 +42,11 @@ class JsonAPI:
 
         url = 'https://fr.openfoodfacts.org/categories.json'
         data = requests.get(url).json()
-        with open('data/categories.json', 'w') as f:
-            f.write(json.dumps(data, indent=4))
+        with open('data/categories.json', 'w') as file:
+            file.write(json.dumps(data, indent=4))
 
-
-    def get_products(self, categories_info):
+    @staticmethod
+    def get_products(categories_info):
         """
         This method loads products from OpenFoodFacts API
         This method is called after sorting datas with Sorted_datas class
@@ -53,10 +55,12 @@ class JsonAPI:
         """
 
         for name, urlnames in categories_info.items():
-            for i in range (1, (NB_PAGES+1)):
-                url = 'https://world.openfoodfacts.org/cgi/search.pl?search_tag=categories&search_terms='+ urlnames +'&purchase_places=France&page_size='+\
-                        str(PRODUCTS_PER_PAGE) +'&page='+ str(i) +'&json=1'
+            for i in range(1, (NB_PAGES+1)):
+                url = 'https://world.openfoodfacts.org/cgi/search.pl?\
+                    search_tag=categories&search_terms={}&\
+                    purchase_places=France&page_size={}&page={}&json=1'.format(
+                        urlnames, str(PRODUCTS_PER_PAGE), str(i))
                 data = requests.get(url).json()
-                file = 'data/Products_' + name + str(i) + '.json'
-                with open(file, 'w') as f:
-                    f.write(json.dumps(data, indent=4))
+                name_file = 'data/Products_' + name + str(i) + '.json'
+                with open(name_file, 'w') as file:
+                    file.write(json.dumps(data, indent=4))

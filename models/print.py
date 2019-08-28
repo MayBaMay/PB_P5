@@ -1,17 +1,21 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-from models.config import *
+"""This module groups main functions of input and display"""
+
+from models.config import NB_CATEGORIES
 
 
 class Print:
+    """All functions grouped in a Print class"""
 
 
     @staticmethod
     def menu():
+        """Display main menu of Pur Beurre application"""
         rep = 0
         loop = True
-        while loop :
+        while loop:
             print("\n")
             print("MENU PRINCIPAL")
             print("1 - Quel aliment souhaitez vous remplacer ?")
@@ -19,45 +23,46 @@ class Print:
             print("3 - Quitter le programme")
             print("\n")
             rep = input("Votre Choix (1, 2 ou 3): ")
-            try :
+            try:
                 repint = int(rep)
-                if repint not in [1, 2, 3] :
+                if repint not in [1, 2, 3]:
                     print("Valeur incorrecte.")
-                else :
+                else:
                     return rep
                     break
-            except ValueError :
+            except ValueError:
                 print("Valeur incorrecte.")
 
     @staticmethod
     def category_choice():
-
+        """Display menu categories"""
         rep = 0
         loop = True
-        while loop :
+        while loop:
             print("CHOIX DE LA CATÉGORIE")
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
-                (ou tapez une partie du nom pour afficher la requête)\n \
+                (ou 'tapez une partie du nom pour afficher la requête')\n \
                 (ou '-1' pour revenir au menu principal)\n \
                 (ou '0' pour quitter le programme):\n ")
             print("\n")
-            try :
+            try:
                 repint = int(rep)
-                if repint not in range(1, NB_CATEGORIES+1) and repint not in [0,-1]:
+                if repint not in range(1, NB_CATEGORIES+1) and repint not in [0, -1]:
                     print("Valeur incorrecte")
-                else :
+                else:
                     return rep
                     break
-            except ValueError :
+            except ValueError:
                 return rep
 
     @staticmethod
     def product_choice():
+        """Display menu Produits"""
         rep = 0
         loop = True
-        while loop :
+        while loop:
             print("CHOIX DU PRODUIT")
-            rep = input("Veuillez choisir un produit dans la liste et entrer ici le chiffre correspondant \n \
+            rep = input("Veuillez choisir un produit et entrer ici le chiffre correspondant \n \
                 (ou tapez une partie du nom pour afficher la requête)\n \
                 (ou '-1' pour revenir au menu principal)\n \
                 (ou '0' pour quitter le programme): \n")
@@ -65,7 +70,8 @@ class Print:
             return rep
 
     @staticmethod
-    def back_to_categories() :
+    def back_to_categories():
+        """Asks user's confirmation if he/she wants to display categories list"""
         rep = 0
         rep = input("Le produit sélectionné ne fait pas partie de la catégorie choisie\n \
                 Pour sélectionner une autre catégorie tapez '1' sinon tapez entrée : ")
@@ -74,49 +80,51 @@ class Print:
 
 
     @staticmethod
-    def exit() :
-        while True :
+    def exit():
+        """Asks user's confirmation if he/she wants to quit"""
+        while True:
             rep = input("Êtes vous sûr de vouloir quitter ? (1=oui, 2=non) : ")
-            try :
+            try:
                 repint = int(rep)
-                if repint not in [1,2]:
+                if repint not in [1, 2]:
                     print("Valeur incorrecte")
-                else :
-                    if repint == 1 :
+                else:
+                    if repint == 1:
                         return True
                         break
-                    elif repint == 2 :
+                    elif repint == 2:
                         return False
                         break
-            except ValueError :
+            except ValueError:
                 print("Valeur incorrecte")
 
 
 
     @staticmethod
-    def save_substitute() :
+    def save_substitute():
+        """Asks user if he/she wants to save the substitute in get_watchlist"""
         while True:
             rep = input("Voulez-vous enregistrer ce substitut ? (1=oui, 2=non) : ")
-            try :
+            try:
                 repint = int(rep)
-                if repint not in [1,2]:
+                if repint not in [1, 2]:
                     print("Valeur incorrecte")
-                else :
-                    if repint == 1 :
+                else:
+                    if repint == 1:
                         return True
                         break
-                    elif repint == 2 :
+                    elif repint == 2:
                         return False
                         break
-            except ValueError :
+            except ValueError:
                 print("Valeur incorrecte")
 
     @staticmethod
-    def result(data, type):
+    def result(data, data_type):
         """
         Print data contained in Mysql request
         """
-        if type == 'list_categories' :
+        if data_type == 'list_categories':
             print(" \n")
             print("Liste des catégories : ")
             print(" \n")
@@ -126,31 +134,33 @@ class Print:
                 print("{:^4} : {:100}".format(row[0], row[1]))
             print(" \n")
 
-        if type == 'categories_details' :
+        if data_type == 'categories_details':
             print("{:^4}   {:50}   {:100}".format('N°', 'Nom', 'Url'))
             print("{:^4}   {:50}   {:100}".format('-'*4, '-'*50, '-'*100))
-            for row in data :
-                print("{:^4} : {:50} : {:100}".format(row[0],row[2], row[3]))
+            for row in data:
+                print("{:^4} : {:50} : {:100}".format(row[0], row[2], row[3]))
             print(" \n")
 
-        if type == 'produis_list' :
+        if data_type == 'produis_list':
             print("{:^4}   {:50}   {:50}   {:^10}".format('N°', 'Nom', 'Catégorie', 'Nutriscore'))
             print("{:^4}   {:50}   {:50}   {:^10}".format('-'*4, '-'*50, '-'*50, '-'*10))
-            for row in data :
-                print("{:^4}   {:50}   {:50}   {:^10}".format(row[0],row[1], row[2], row[3]))
+            for row in data:
+                print("{:^4}   {:50}   {:50}   {:^10}".format(row[0], row[1], row[2], row[3]))
             print(" \n")
 
-        if type =='show_substitute' :
-            print("Substitut trouvé : ")
-            for row in data :
-                print("N° : {}\nNom : {}\nNutriscore : {}\nMarques : {}\nPoints de vente : {}\nUrl : {}"
-                .format(row[0],row[1], row[2], row[3], row[4], row[5]))
+        if data_type == 'show_substitute':
+            print("Substitut trouvé: ")
+            for row in data:
+                print("N° : {}\nNom : {}\nNutriscore : {}\nMarques : {}\n\
+                    Points de vente : {}\nUrl : {}".format(
+                        row[0], row[1], row[2], row[3], row[4], row[5]))
             print(" \n")
 
-        if type == 'saved_substitute' :
+        if data_type == 'saved_substitute':
             print("Substituts enregistrés :")
             print(" \n")
-            for row in data :
-                print("date : {} | N° : {} | Nom : {} | Nutriscore : {} | Marques : {} | Points de vente :{} | url :{} | Catégorie :{}"
-                    .format(row[0],row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+            for row in data:
+                print("date : {} | N° : {} | Nom : {} | Nutriscore : {} | Marques : {} \
+                    | Points de vente :{} | url :{} | Catégorie :{}"
+                      .format(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
                 print(" \n")

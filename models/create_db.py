@@ -5,9 +5,6 @@
 This module creates tables in database.
 """
 
-import mysql.connector
-
-from models.config import *
 
 
 class DbCreate:

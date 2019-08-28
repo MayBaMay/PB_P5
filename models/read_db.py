@@ -5,8 +5,6 @@
 This module manage how to read database.
 """
 
-import mysql.connector
-from models.config import *
 from models.print import Print
 
 
@@ -17,7 +15,7 @@ class DbRead:
 
     def __init__(self, dbauth):
         self.connect = dbauth
-        self.on = True
+        self.use_app = True
         self.nutriscore = ""
         self.cat_choice = ""
         self.prod_choice = ""
@@ -37,20 +35,18 @@ class DbRead:
         """
         This method returns to the application if user wants to quit or continu
         """
-        return self.on
+        return self.use_app
 
 
     def get_started(self):
         """
         This method is the main menu of the application
         """
-
         rep = Print.menu()
 
-        if rep == '1' :  #user chose to find a substitute of a product
+        if rep == '1':  #user chose to find a substitute of a product
             query = ("SELECT categories.num, categories.name \
-                FROM categories"
-                )
+                FROM categories")
             cursor = self.get_data(query)
             data = cursor.fetchall()
             self.categories_list = data
@@ -58,46 +54,48 @@ class DbRead:
             Print.result(self.categories_list, 'list_categories')  # print list of categories
             self.get_cat_choice()  # call method to process the category's choice
 
-        elif rep == '2' :
-            self.get_favoris()  #user chose to see saved substitutes
+        elif rep == '2':
+            self.get_watchlist()  #user chose to see saved substitutes
 
-        elif rep == '3' :  #user chose to quit
-            if Print.exit() == True :  # if user confirmed
-                self.on = False
-            else :
+        elif rep == '3':  #user chose to quit
+            if Print.exit() is True:  # if user confirmed
+                self.use_app = False
+            else:
                 self.get_started()  # start again
 
 
     def get_cat_choice(self):
+        """This method process user's choice when suppose to choose a category"""
         loop = True
-        while loop :
+        while loop:
             self.cat_choice = Print.category_choice()
-            if self.cat_choice.isnumeric() :
+            if self.cat_choice.isnumeric():
 
-                if self.cat_choice == '0' :
-                    if Print.exit() == True :
-                        self.on = False
+                if self.cat_choice == '0':
+                    if Print.exit() is True:
+                        self.use_app = False
                         break
-                else :
+                else:
                     query = ("SELECT * FROM Categories WHERE num = %s")
-                    cursor = self.get_data(query, (self.cat_choice ,))
+                    cursor = self.get_data(query, (self.cat_choice,))
                     data = cursor.fetchall()
                     self.get_products()
                     break
 
-            else :
-                if self.cat_choice =='-1' :
+            else:
+                if self.cat_choice == '-1':
                     self.get_started()
                     break
 
-                else :
+                else:
                     query = ("SELECT * FROM Categories WHERE name like %s")
                     cursor = self.get_data(query, ('%'+ self.cat_choice +'%',))
                     data = cursor.fetchall()
-                    if data != [] :
+                    if data != []:
                         Print.result(data, 'categories_details')
 
     def get_products(self):
+        """This method get procuct's datas to display from database"""
         query = ("SELECT Produits.num,\
                     produits.product_name,\
                     GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
@@ -109,16 +107,17 @@ class DbRead:
                 GROUP BY Produits.id\
                 ORDER BY Produits.num\
                 ")
-        cursor = self.get_data(query, (self.cat_choice ,))
+        cursor = self.get_data(query, (self.cat_choice,))
         data = cursor.fetchall()
         Print.result(data, 'produis_list')
         self.get_prod_choice()
 
-    def get_prod_choice(self) :
+    def get_prod_choice(self):
+        """This method process user's choice when suppose to choose a product"""
         loop = True
-        while loop :
+        while loop:
             self.prod_choice = Print.product_choice()
-            if self.prod_choice.isnumeric() :
+            if self.prod_choice.isnumeric():
                 # check if input is in product's numbers
                 repint = int(self.prod_choice)
                 query = ("SELECT Produits.num \
@@ -130,21 +129,21 @@ class DbRead:
                 cursor = self.get_data(query, (self.cat_choice,))
                 data = cursor.fetchall()
                 num_list = []
-                for num in data :
+                for num in data:
                     num_list.append(num[0])
 
-                if repint not in num_list and repint != 0 :
+                if repint not in num_list and repint != 0:
                     if Print.back_to_categories() == '1':
                         Print.result(self.categories_list, 'list_categories')
                         self.get_cat_choice()
-                else :
-                    if self.prod_choice == '0' :
-                        if Print.exit() == True :
-                            self.on = False
+                else:
+                    if self.prod_choice == '0':
+                        if Print.exit() is True:
+                            self.use_app = False
                             break
-                        else :
+                        else:
                             self.get_products()
-                    else :
+                    else:
                         query = ("SELECT Produits.num,\
                                 produits.product_name,\
                                 GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
@@ -159,17 +158,17 @@ class DbRead:
                             ")
                     cursor = self.get_data(query, (self.cat_choice, self.prod_choice,))
                     data = cursor.fetchall()
-                    if data != [] :
+                    if data != []:
                         print("Vous avez choisi le produit suivant : ")
                         Print.result(data, 'produis_list')
                     self.get_substitute()
                     break
-            else :
+            else:
 
-                if self.prod_choice == '-1' :
+                if self.prod_choice == '-1':
                     self.get_started()
 
-                else :
+                else:
                     query = ("SELECT Produits.num,\
                                 produits.product_name,\
                                 GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories,\
@@ -184,10 +183,11 @@ class DbRead:
                             ")
                     cursor = self.get_data(query, (self.cat_choice, '%'+self.prod_choice +'%',))
                     data = cursor.fetchall()
-                    if data != [] :
+                    if data != []:
                         Print.result(data, 'produis_list')
 
-    def get_substitute (self):
+    def get_substitute(self):
+        """ This method get a substitute whith a better nutriscore from the same category"""
         query = ("SELECT Produits.num,\
                     Produits.product_name,\
                     Produits.nutrition_grade_fr,\
@@ -209,18 +209,19 @@ class DbRead:
         data = cursor.fetchall()
         num_substitut = str(data[0][0])
 
-        if data == [] :
+        if data == []:
             print("Aucun substitut trouvé dans cette catégorie")
-        else :
+        else:
             Print.result(data, 'show_substitute')
-            if Print.save_substitute() :
+            if Print.save_substitute():
                 update_query = ("UPDATE Produits SET favoris = CURRENT_DATE WHERE num =  %s")
                 cursor.execute(update_query, (num_substitut,))
                 self.connect.commit()
 
         self.get_started()
 
-    def get_favoris(self):
+    def get_watchlist(self):
+        """This method display the watchlist of substitutes"""
         query = ("SELECT Produits.favoris,\
                     Produits.num,\
                     Produits.product_name,\
@@ -238,9 +239,9 @@ class DbRead:
                 ")
         cursor = self.get_data(query)
         data = cursor.fetchall()
-        if data == [] :
+        if data == []:
             print(" Vous n'avez encore enregistré aucun substitut")
-        else :
+        else:
             Print.result(data, 'saved_substitute')
             self.get_started()
 

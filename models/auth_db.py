@@ -1,12 +1,13 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-import mysql.connector
-from models.config import *
-
 """This module manage all operations on MySQL connexion"""
 
-class DbAuth :
+import mysql.connector
+from models.config import MYSQL_HOST, MYSQL_USER, MYSQL_PASSWD, MYSQL_DATABASE
+
+
+class DbAuth:
     """
     This class allowed to automate all operation on the connexion
     the connexion itself, cursor creation and commit
@@ -17,12 +18,12 @@ class DbAuth :
         self.user = MYSQL_USER
         self.passwrd = MYSQL_PASSWD
         self.database = MYSQL_DATABASE
-        self.PurBeurreConnect = None
+        self.pb_connect = None
 
     def connect(self):
         """Connexion to MySQL using MySQL connector"""
-        try :
-            self.PurBeurreConnect = mysql.connector.connect(
+        try:
+            self.pb_connect = mysql.connector.connect(
                 host = self.host,
                 user = self.user,
                 passwd = self.passwrd,
@@ -33,8 +34,8 @@ class DbAuth :
 
     def create_cursor(self):
         """Generate a cursor with the same connexion"""
-        return self.PurBeurreConnect.cursor()
+        return self.pb_connect.cursor()
 
     def commit(self):
         """Generate a commit with the same connexion"""
-        return self.PurBeurreConnect.commit()
+        return self.pb_connect.commit()

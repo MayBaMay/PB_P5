@@ -1,18 +1,19 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
+""" Find a product's substitute with  Open Food Facts database"""
 
-from models.auth_db_PB import DbAuth
-from models.JsonAPI import JsonAPI
-from models.sort_datas import Sorted_datas
-from models.create_db_PB import DbCreate
-from models.insert_db_PB import DbInsert
-from models.read_db_PB import DbRead
-from models.print import Print
-from models.config import *
+
+from models.auth_db import DbAuth
+from models.json_api import JsonAPI
+from models.sort_datas import SortedDatas
+from models.create_db import DbCreate
+from models.insert_db import DbInsert
+from models.read_db import DbRead
 
 
 def game_on():
+    """Main code for application Pur Beurre"""
 
     # generate database connexion
     dbauth = DbAuth()
@@ -21,10 +22,10 @@ def game_on():
     # create a JsonAPI instance to start loading datafile
     jload = JsonAPI()
 
-    if jload.first == True :  # if json files not in the repertory
+    if jload.first is True:  # if json files not in the repertory
 
         # Create instances needed for loading datas in database
-        sort = Sorted_datas(dbauth)
+        sort = SortedDatas(dbauth)
         dbstruc = DbCreate(dbauth)
         insert = DbInsert(dbauth)
 
@@ -48,12 +49,12 @@ def game_on():
 
     # Generate an instance of the class DbRead to read datas in database
     read = DbRead(dbauth)
-    on = True
+    use_app = True
 
-    while on == True :
+    while use_app is True:
 
         read.get_started()
-        on = read.exit()
+        use_app = read.exit()
 
 if __name__ == "__main__":
 
