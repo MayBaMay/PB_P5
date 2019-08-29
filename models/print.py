@@ -38,7 +38,7 @@ class Print:
         while True:
             print("CHOIX DE LA CATÉGORIE")
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
-                (ou 'F' pour tapez une partie du nom pour afficher la requête)\n \
+                (ou 'F' pour tapez une partie du nom pour affiner la requête)\n \
                 (ou '-1' pour revoir la liste des catégories)\n\
                 (ou '0' pour revenir au menu principal):\n ")
             print("\n")
@@ -60,7 +60,7 @@ class Print:
         while True:
             print("CHOIX DU PRODUIT")
             rep = input("Veuillez choisir un produit et entrer ici le chiffre correspondant \n \
-                (ou 'F' une partie du nom pour afficher la requête)\n \
+                (ou 'F' une partie du nom pour affiner la requête)\n \
                 (ou '-1' pour sélectionner une autre catégorie)\n \
                 (ou '0' pour revenir au menu principal): \n")
             print("\n")
@@ -91,7 +91,6 @@ class Print:
         print("\n")
         return rep
 
-
     @staticmethod
     def exit():
         """Asks user's confirmation if he/she wants to quit"""
@@ -107,8 +106,6 @@ class Print:
                     return False
             except ValueError:
                 print("Valeur incorrecte")
-
-
 
     @staticmethod
     def save_substitute():

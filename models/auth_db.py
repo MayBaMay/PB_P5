@@ -4,6 +4,7 @@
 """This module manage all operations on MySQL connexion"""
 
 import mysql.connector
+
 from models.config import MYSQL_HOST, MYSQL_USER, MYSQL_PASSWD, MYSQL_DATABASE
 
 

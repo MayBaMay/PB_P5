@@ -6,7 +6,7 @@ import math
 
 # MySQL Authentification
 MYSQL_HOST = "localhost"
-MYSQL_USER = "maylis"
+MYSQL_USER = "PBuser"
 MYSQL_PASSWD = "ratatouille"
 MYSQL_DATABASE = "dbPurBeurre"
 

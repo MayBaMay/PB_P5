@@ -16,7 +16,6 @@ class DbRead:
     def __init__(self, dbauth):
         self.connect = dbauth
         self.use_app = True
-        self.nutriscore = ""
         self.cat_choice = ""
         self.prod_choice = ""
         self.categories_list = []
@@ -71,11 +70,11 @@ class DbRead:
             self.cat_choice = Print.category_choice()
 
             try:
-                repint = int(self.cat_choice)
-                if repint == 0:  # if user choose main menu
+                int(self.cat_choice)
+                if self.cat_choice == '0':  # if user choose main menu
                     self.main_menu()
                     break
-                elif repint == -1:  #if user choose category list
+                elif self.cat_choice == '-1':  #if user choose category list
                     self.get_categories_list()
                     break
 
@@ -108,18 +107,14 @@ class DbRead:
         """This method process user's choice when suppose to choose a product"""
         while True:
             self.prod_choice = Print.product_choice()
-
             try:
-                repint = self.prod_choice
-
-                if repint == 0:  # if user choose main menu
+                int(self.prod_choice)
+                if self.prod_choice == '0':  # if user choose main menu
                     self.main_menu()
                     break
-
-                elif repint == -1:
+                elif self.prod_choice == '-1':
                     self.get_categories_list()
                     break
-
                 else:
                     self.valid_product()
                     query = ("SELECT Produits.num,\

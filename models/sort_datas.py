@@ -32,7 +32,6 @@ class SortedDatas:
 
     def filtered_categories(self):
         """ Get categories datas in a list so they can be treated as needed"""
-
         with open("data/categories.json", "r", encoding="utf8") as data:
             data_json = json.load(data)
             for item in data_json["tags"]:
@@ -54,7 +53,6 @@ class SortedDatas:
         """
         This method get datas needed to load products pages with Json class
         """
-
         cat_url_names = []
         cat_names = []
 
