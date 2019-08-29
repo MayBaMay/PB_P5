@@ -49,12 +49,10 @@ def game_on():
 
     # Generate an instance of the class DbRead to read datas in database
     read = DbRead(dbauth)
-    use_app = True
 
-    while use_app is True:
+    while read.exit() is True:
 
-        read.get_started()
-        use_app = read.exit()
+        read.main_menu()
 
 if __name__ == "__main__":
 

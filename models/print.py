@@ -35,39 +35,55 @@ class Print:
     def category_choice():
         """Display menu categories"""
         rep = 0
-        loop = True
-        while loop:
+        while True:
             print("CHOIX DE LA CATÉGORIE")
             rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
-                (ou 'tapez une partie du nom pour afficher la requête')\n \
-                (ou '-1' pour revenir au menu principal)\n \
-                (ou '0' pour quitter le programme):\n ")
+                (ou 'F' pour tapez une partie du nom pour afficher la requête)\n \
+                (ou '-1' pour revoir la liste des catégories)\n\
+                (ou '0' pour revenir au menu principal):\n ")
             print("\n")
             try:
                 repint = int(rep)
-                if repint not in range(1, NB_CATEGORIES+1) and repint not in [0, -1]:
+                if repint not in range(1, NB_CATEGORIES+1) and repint not in (0, -1):
                     print("Valeur incorrecte")
                 else:
                     return rep
             except ValueError:
-                return rep
+                if str.upper(rep) == 'F':
+                    return rep
+                print("Valeur incorrecte")
 
     @staticmethod
     def product_choice():
         """Display menu Produits"""
         rep = 0
-        loop = True
-        while loop:
+        while True:
             print("CHOIX DU PRODUIT")
             rep = input("Veuillez choisir un produit et entrer ici le chiffre correspondant \n \
-                (ou tapez une partie du nom pour afficher la requête)\n \
-                (ou '-1' pour revenir au menu principal)\n \
-                (ou '0' pour quitter le programme): \n")
+                (ou 'F' une partie du nom pour afficher la requête)\n \
+                (ou '-1' pour sélectionner une autre catégorie)\n \
+                (ou '0' pour revenir au menu principal): \n")
             print("\n")
-            return rep
+            try:
+                int(rep)
+                return rep
+            except ValueError:
+                if str.upper(rep) == 'F':
+                    return rep
 
     @staticmethod
-    def back_to_categories():
+    def keyword_research():
+        """Asks user to enter keyword for a keyword research"""
+        rep = 0
+        print("FILTRER LA RECHERCHE")
+        rep = input("Veuillez entrer un mot clé pour préciser votre recherche \n \
+            (ou '-1' pour revoir la liste des catégories)\n\
+            (ou '0' pour revenir au menu principal):\n ")
+        print("\n")
+        return rep
+
+    @staticmethod
+    def prod_not_in_category():
         """Asks user's confirmation if he/she wants to display categories list"""
         rep = 0
         rep = input("Le produit sélectionné ne fait pas partie de la catégorie choisie\n \
