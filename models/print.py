@@ -14,8 +14,7 @@ class Print:
     def menu():
         """Display main menu of Pur Beurre application"""
         rep = 0
-        loop = True
-        while loop:
+        while True:
             print("\n")
             print("MENU PRINCIPAL")
             print("1 - Quel aliment souhaitez vous remplacer ?")
@@ -29,7 +28,6 @@ class Print:
                     print("Valeur incorrecte.")
                 else:
                     return rep
-                    break
             except ValueError:
                 print("Valeur incorrecte.")
 
@@ -51,7 +49,6 @@ class Print:
                     print("Valeur incorrecte")
                 else:
                     return rep
-                    break
             except ValueError:
                 return rep
 
@@ -91,10 +88,8 @@ class Print:
                 else:
                     if repint == 1:
                         return True
-                        break
                     elif repint == 2:
                         return False
-                        break
             except ValueError:
                 print("Valeur incorrecte")
 
@@ -112,10 +107,8 @@ class Print:
                 else:
                     if repint == 1:
                         return True
-                        break
                     elif repint == 2:
                         return False
-                        break
             except ValueError:
                 print("Valeur incorrecte")
 
