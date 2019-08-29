@@ -104,8 +104,7 @@ class Print:
                 else:
                     if repint == 1:
                         return True
-                    elif repint == 2:
-                        return False
+                    return False
             except ValueError:
                 print("Valeur incorrecte")
 
@@ -123,8 +122,7 @@ class Print:
                 else:
                     if repint == 1:
                         return True
-                    elif repint == 2:
-                        return False
+                    return False
             except ValueError:
                 print("Valeur incorrecte")
 

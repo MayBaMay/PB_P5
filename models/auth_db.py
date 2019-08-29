@@ -24,9 +24,9 @@ class DbAuth:
         """Connexion to MySQL using MySQL connector"""
         try:
             self.pb_connect = mysql.connector.connect(
-                host = self.host,
-                user = self.user,
-                passwd = self.passwrd,
+                host=self.host,
+                user=self.user,
+                passwd=self.passwrd,
                 )
         except mysql.connector.errors.InterfaceError:
             print("Serveur MySQL inaccessible.")

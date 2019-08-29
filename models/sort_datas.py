@@ -26,7 +26,6 @@ class SortedDatas:
 
         self.products_infos_list = []
         self.categories_names_list = []
-        self.categories_num_list = []
         self.asso = []
 
 
@@ -120,6 +119,7 @@ class SortedDatas:
         wich links products and categories
         NB : a product can belong to more than one category
         """
+        categories_num_list = []
 
         # recover categories number for each products from ids in Json categories_hierarchy
         for categories in self.categories_names_list:
@@ -131,14 +131,14 @@ class SortedDatas:
                 data = cursor.fetchone()
                 if data is not None:
                     list_num_category_per_product.append(data[0])
-            self.categories_num_list.append(list_num_category_per_product)
+            categories_num_list.append(list_num_category_per_product)
 
         # Create a dictionnary with product's id and related category's number
         i = 0
         while i < len(self.products_infos_list)-1:
             product_id = self.products_infos_list[i]['id']   #get product's id
 
-            for category_num in self.categories_num_list[i]:  # get num category
+            for category_num in categories_num_list[i]:  # get num category
                 category_num = str(category_num)
 
                 info_cat = (category_num, product_id)
