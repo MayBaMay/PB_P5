@@ -20,7 +20,7 @@ EXIT
 ```
 Those credentials are contained in config.py module and will be used by the application.
 
-To launch the programm, run in your terminal:
+To launch the program, run in your terminal:
 ```bash
 Python3 pur_beurre.py
 ```
@@ -30,7 +30,10 @@ Python3 pur_beurre.py
 ### Get datas from Open Food Facts API into json files :
 
 The programm uses two classes to do so :
-1. JsonAPI in json_api.py module :
-This module launches url requests to the API and stores datas in json files in a '/data' repository  
-2. SortedDatas in sort_datas.py module
-This module filters
+* **JsonAPI** in json_api.py module :
+<br/>This module launches url requests to the API and stores datas in json files in a '/data' repository  
+* **SortedDatas** in sort_datas.py module
+<br/>This module filters datas before and after getting datas from the API.
+
+
+1. 
