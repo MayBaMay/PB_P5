@@ -105,10 +105,34 @@ The programm uses two classes to do so :
 
 14. User interface ==> class **Print** :
 
-    Main menu, method **menu()** :
-```bash
-    MENU PRINCIPAL
-    1 - Quel aliment souhaitez vous remplacer ?
-    2 - Retrouver mes aliments substitués
-    3 - Quitter le programme
-```
+    Method **menu()** :
+Display main menu
+1 - Find a product and its alternative
+2 - Display my watchlist
+3 - Quit
+
+    Method **category_choice()** :
+Display menu categories
+User choose a number of category
+or 'F' to filter the research with a keyword
+or '-1' to see categories list and choose an other one
+or '0' to come back to main menu
+
+    Method **product_choice()** :
+Display menu Produits
+User choose the number of a product
+or 'F' to filter the research with a keyword
+or '-1' to see categories list and choose an other one
+or '0' to come back to main menu
+
+    Method **keyword_research()** :
+Asks user to enter keyword for a keyword research
+user enter a keyword
+or '-1' to see categories list and choose an other one
+or '0' to come back to main menu
+
+    Method **prod_not_in_category()** :
+In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list or choose an other product number
+
+    Method **prod_not_in_category()** :
+Asks user's confirmation if he/she wants to display categories list
