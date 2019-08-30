@@ -3,7 +3,7 @@
 This application was conceived to help consumer to find healthy alternatives.
 <br/>It uses [Open Food Facts API](https://world.openfoodfacts.org])
 
-## How it works :
+## How to use it :
 
 Make sure your environnement runs requirements
 
@@ -18,3 +18,10 @@ GRANT ALL PRIVILEGES ON dbPurBeurre.* TO 'PBuser'@'localhost';
 EXIT
 ```
 Those credentials are contained in config.py module and will be used by the application.
+
+To launch the programm, run in your terminal:
+```bash
+Python3 pur_beurre.py
+```
+
+## How it works :
