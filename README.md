@@ -18,7 +18,7 @@ GRANT ALL PRIVILEGES ON dbPurBeurre.* TO 'PBuser'@'localhost';
 
 EXIT
 ```
-Those credentials are contained in config.py module and will be used by the application.
+Those credentials are contained in **config.py** module and will be used by the application.
 
 To launch the program, run in your terminal:
 ```bash
@@ -27,10 +27,10 @@ Python3 pur_beurre.py
 
 ## How it works :
 
-## Create a MySQL connexion :
+### Create a MySQL connexion :
 
 * **DbAuth** in auth_db.py module :
-To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
+<br/>To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
 
 ### Get datas from Open Food Facts API into json files :
 
@@ -40,11 +40,21 @@ The programm uses two classes to do so :
 * **SortedDatas** in sort_datas.py module
 <br/>This module filters datas before and after getting datas from the API.
 
-
-1. Method **check_first()** from **JsonAPI**
-Program checks first if datas already had been loaded in the project in the '/data' folder.
+#### Load datas ?
+1. Method **check_first()** from **JsonAPI** :
+<br/>Program checks first if datas already had been loaded in the project in the '/data' folder.
 This method allows to create a condition to initialise API requests and MySQL tables creation
-2. Method **get_categories()** from **JsonAPI**
-This method use HTTP library requests to get categories' informations from the API and save it in a 'data/categories.json' file
-3. Method **filtered_categories()** from ** SortedDatas**
-Once we have all categories datas, this method
+
+#### Get wanted categories from OFF
+2. Method **get_categories()** from **JsonAPI** :
+<br/>This method use HTTP library requests to get categories' informations from the API and save it in a 'data/categories.json' file
+3. Method **filtered_categories()** from **SortedDatas** :
+<br/>Once we have all categories datas, this method read them and keep only the number of categories defined in the **config.py** module. We also chose to keep only categories with at least 10000 products in it. a 'final_cat' list is created in order to insert datas in database.
+4. Method **get_info_from_categories()** from **SortedDatas** :
+<br/>This method gets names and url names in a dictionnary. Names will be used to name json products files' names and url names will be needed for API's requests.
+
+#### Get wanted products from OFF
+5. Method **get_products()** from **JsonAPI** :
+<br/>With categories info we've got with the last method, we are able to send HTTP requests. We decided to limit products to french purchase places as final users should mostly be french. Requests will use number of pages specified in the **config.py** module. All those pages are saved in  a json file in the folder '/data'.
+6. Method **filtered_products()**  from **SortedDatas** :
+<br/>Now we have datas in json files we need to get datas from them in order to insert them in the database. Two lists are created. One is keeping the wanted datas from products such as id, name, brands... The other will keep for each product, the categories list referencing the product. We'll see later on we'll create a specific table in the database to link each product to the several categories it could be related.
