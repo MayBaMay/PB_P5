@@ -30,7 +30,7 @@ Python3 pur_beurre.py
 ### I. Create a MySQL connexion :
 
 This program use MySQL.connetor as interface
-* **DbAuth** in auth_db.py module :
+* [color=#26B260]**DbAuth**[/color] in auth_db.py module :
 <br/>To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
 
 ### II. Get datas from Open Food Facts API into json files :
