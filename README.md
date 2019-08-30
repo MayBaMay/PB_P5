@@ -7,7 +7,7 @@ This application was conceived to help consumer to find healthy alternatives.
 
 Make sure your environnement runs requirements
 
-You need to create a MySQL user and give privileges to him on dbPurBeurre database.
+You need to create a MySQL user 'PBuser' and give privileges to him on 'dbPurBeurre' database.
 ```mysql
 Mysql -h localhost -u root -p
 # insert your root password
