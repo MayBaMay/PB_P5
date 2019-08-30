@@ -106,33 +106,33 @@ The programm uses two classes to do so :
 14. User interface ==> class **Print** :
 
     Method **menu()** :
-Display main menu
-1 - Find a product and its alternative
-2 - Display my watchlist
-3 - Quit
+<br/>Display main menu
+<br/>1 - Find a product and its alternative
+<br/>2 - Display my watchlist
+<br/>3 - Quit
 
     Method **category_choice()** :
-Display menu categories
-User choose a number of category
-or 'F' to filter the research with a keyword
-or '-1' to see categories list and choose an other one
-or '0' to come back to main menu
+<br/>Display menu categories
+<br/>User choose a number of category
+<br/>or 'F' to filter the research with a keyword
+<br/>or '-1' to see categories list and choose an other one
+<br/>or '0' to come back to main menu
 
     Method **product_choice()** :
-Display menu Produits
-User choose the number of a product
-or 'F' to filter the research with a keyword
-or '-1' to see categories list and choose an other one
-or '0' to come back to main menu
+<br/>Display menu Produits
+<br/>User choose the number of a product
+<br/>or 'F' to filter the research with a keyword
+<br/>or '-1' to see categories list and choose an other one
+<br/>or '0' to come back to main menu
 
     Method **keyword_research()** :
-Asks user to enter keyword for a keyword research
-user enter a keyword
-or '-1' to see categories list and choose an other one
-or '0' to come back to main menu
+<br/>Asks user to enter keyword for a keyword research
+<br/>user enter a keyword
+<br/>or '-1' to see categories list and choose an other one
+<br/>or '0' to come back to main menu
 
     Method **prod_not_in_category()** :
-In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list or choose an other product number
+<br/>In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list or choose an other product number
 
     Method **prod_not_in_category()** :
-Asks user's confirmation if he/she wants to display categories list
+<br/>Asks user's confirmation if he/she wants to display categories list
