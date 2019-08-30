@@ -1,6 +1,7 @@
 # Find a substitute with Open Food Facts
 
 This application was conceived to help consumer to find healthy alternatives.
+For now, you can run it on your terminal as it hasn't been programmed with a graphic interface.
 <br/>It uses [Open Food Facts API](https://world.openfoodfacts.org])
 
 ## How to use it :
