@@ -103,7 +103,7 @@ The programm uses two classes to do so :
 * **DbRead** in read_db.py module :
 <br/>An instance of this class allows program to interact with the database and treats user inputs gotten from the **Print** class
 
-14. User interface ==> class **Print** :
+14. Getting user's input ==> class **Print** :
 
     Method **menu()** :
 <br/>Display main menu
@@ -136,3 +136,38 @@ The programm uses two classes to do so :
 
     Method **prod_not_in_category()** :
 <br/>Asks user's confirmation if he/she wants to display categories list
+
+    Method **exit()** :
+<br/>Asks user's confirmation if he/she wants to quit the program
+
+    Method **save_substitute()** :
+<br/>Asks user if he/she wants to save the substitute in get_watchlist
+
+    Method **result()** :
+<br/>Formates and prints results for each type of requets
+
+15. Get and search data in MySQL database ==> class **DbRead** :
+
+    Method **exit()** :
+<br/>Treats user's wish to quit or not the database
+
+    Method **get_data()** :
+<br/>Create a simple mySQL connector execute request with all elements needed in parameters.
+
+    Method **main_menu()** :
+<br/>Process main menu's input
+
+    Methods **get_categories_list()** and **categories_menu()** :
+<br/>Get and display (with **result()** from Print class) categories datas from database and process user's input
+
+    Methods **get_products_list()**, **products_menu()** and **valid_product()**:
+<br/>Get and display (with **result()** from Print class) products datas related to chosen category from database and process user's input (checking if products is related to the category)
+
+    Method **keyword_research_menu()** :
+<br/>Process user's input while in keyword research menu
+
+    Methods **get_substitute_list()** and **substitute_menu()**:
+<br/>Get and display (with **result()** from Print class) substitute datas and process user's input about saving it or not
+
+    Method **get_watchlist()** :
+<br/>Get and display (with **result()** from Print class) watchlist from database
