@@ -27,12 +27,13 @@ Python3 pur_beurre.py
 
 ## How it works :
 
-### Create a MySQL connexion :
+### I. Create a MySQL connexion :
 
+This program use MySQL.connetor as interface
 * **DbAuth** in auth_db.py module :
 <br/>To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
 
-### Get datas from Open Food Facts API into json files :
+### II. Get datas from Open Food Facts API into json files :
 
 The programm uses two classes to do so :
 * **JsonAPI** in json_api.py module :
@@ -61,7 +62,7 @@ This method allows to create a condition to initialise API requests and MySQL ta
 7. Method **truncate_datas()** from **SortedDatas** :
 <br/>Each of **filtered_categories()** and **filtered_products()** methods use it to truncate datas to fit th sizes we will define for MySQL tables.
 
-### Create and fill MySQL tables :
+### III. Create and fill MySQL tables :
 
 The programm uses two classes to do so :
 * **DbCreate** in create_db.py module :
@@ -69,14 +70,26 @@ The programm uses two classes to do so :
 * **DbInsert** in insert_db.py module
 <br/>An instance of this class insert sorted datas in the database
 
+Those two classes takes an instance of the class **DbAuth** in argument to get the right connexion with MySQL Connector.
+
 #### Create database structure
 8. Method **drop()** from **DbCreate** :
 <br/>First of all we have to ensure we won't add datas in already filled database. This method will reinitiate it.
 9. Method **create_tables()** from **DbCreate** :
-<br/>Using an object from the class **DbAuth** to connect to the database, we create our tables.
+<br/>We create our tables.
 To see the database's model, click [here](https://github.com/MayBaMay/PB_P5/blob/master/Modèle_Pur_Beurre.pdf).
 
+#### Insert categories and products datas in database
+
+10. Method **insert_categories()** from **DbInsert** :
+<br/>With sorted datas from **SortedDatas** attribute **final_cat**, we insert categories
+11. Method **insert_products()** from **DbInsert** :
+<br/>With sorted datas from **SortedDatas** attribute **products_infos_list**, we insert products
 
 #### Get products and categories relation
-8. Method **get_categories_per_product()** from **SortedDatas** :
-As we said earlier, each product can be related to several categories and a category is mostly composed to several products. We need to get those relations in a list to be able to insert them in the database. This method will need to send a mysql research on do so
+12. Method **get_categories_per_product()** from **SortedDatas** :
+<br/>As we said earlier, each product can be related to several categories and a category is mostly composed to several products. We need to get those relations in a list to be able to insert them in the database. Using again our **DbAuth** object, we can store those relations in a list.
+
+#### Insert links between products and categories in the specific table
+13. Method **insert_prod_cat()** from **DbInsert** :
+<br/>With sorted datas from **SortedDatas** attribute **asso**, we can insert datas.
