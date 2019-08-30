@@ -7,7 +7,7 @@ This module sorts datas loaded from OpenFoodFects API
 
 import json
 
-from models.config import NB_CATEGORIES, NB_PAGES
+from models.config import NB_CATEGORIES, NB_PAGES, MINPRODINCAT
 
 
 class SortedDatas:
@@ -42,7 +42,7 @@ class SortedDatas:
             # limit the number of categories to the number chosen in config
             if i < NB_CATEGORIES:
                 # limit the categories to the ones which have a lot of products
-                if cat["products"] > 10000:
+                if cat["products"] > MINPRODINCAT:
                     self.final_cat.append(cat)
                     i += 1
 
