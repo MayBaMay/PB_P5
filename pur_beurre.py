@@ -45,7 +45,7 @@ def game_on():
 
         # get datas for table Asso_prod_cat wich links products and categories
         sort.get_categories_per_product()
-        insert.insert_prod_cat(sort.asso)
+        insert.insert_prod_cat(sort.cat_prod_relation)
 
     # Generate an instance of the class DbRead to read datas in database
     read = DbRead(dbauth)

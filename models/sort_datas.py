@@ -26,7 +26,7 @@ class SortedDatas:
 
         self.products_infos_list = []
         self.categories_names_list = []
-        self.asso = []
+        self.cat_prod_relation = []
 
 
 
@@ -141,8 +141,8 @@ class SortedDatas:
 
                 info_cat = (category_num, product_id)
 
-                if info_cat not in self.asso:  # check if not duplication
-                    self.asso.append(info_cat)
+                if info_cat not in self.cat_prod_relation:  # check if not duplication
+                    self.cat_prod_relation.append(info_cat)
                 else:
                     pass
             i += 1

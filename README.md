@@ -93,3 +93,22 @@ To see the database's model, click [here](https://github.com/MayBaMay/PB_P5/blob
 #### Insert links between products and categories in the specific table
 13. Method **insert_prod_cat()** from **DbInsert** :
 <br/>With sorted datas from **SortedDatas** attribute **asso**, we can insert datas.
+
+### IV. User interface and database's interactions
+
+The programm uses two classes to do so :
+* **Print** in print.py module
+<br/>This class constains only static methods and consolidate main interaction with the user in a specific module.
+
+* **DbRead** in read_db.py module :
+<br/>An instance of this class allows program to interact with the database and treats user inputs gotten from the **Print** class
+
+14. User interface ==> class **Print** :
+
+    Main menu, method **menu()** :
+```bash
+    MENU PRINCIPAL
+    1 - Quel aliment souhaitez vous remplacer ?
+    2 - Retrouver mes aliments substitués
+    3 - Quitter le programme
+```
