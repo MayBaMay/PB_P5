@@ -7,7 +7,7 @@ This application was conceived to help consumer to find healthy alternatives.
 
 Make sure your environnement runs requirements
 
-You need to create a MySQL user and give privileges to him on his database.
+You need to create a MySQL user and give privileges to him on dbPurBeurre database.
 ```mysql
 Mysql -h localhost -u root -p
 # insert your root password
@@ -17,4 +17,4 @@ GRANT ALL PRIVILEGES ON dbPurBeurre.* TO 'PBuser'@'localhost';
 
 EXIT
 ```
-<br/>Those credentials are contained in config.py module.
+Those credentials are contained in config.py module and will be used by the application.
