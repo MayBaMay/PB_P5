@@ -167,7 +167,12 @@ The programm uses two classes to do so :
 <br/>Process user's input while in keyword research menu
 
     Methods **get_substitute_list()** and **substitute_menu()**:
-<br/>Get and display (with **result()** from Print class) substitute datas and process user's input about saving it or not
+<br/>Get and display (with **result()** from Print class) substitute datas and process user's input about saving it or not. The substitute is a products from the same category with the best nutriscore.
 
     Method **get_watchlist()** :
 <br/>Get and display (with **result()** from Print class) watchlist from database
+
+
+Potential mprovements :
+- Develop an update to the database from the Open Food Facts API or at least allow user to procede to an update. For now, all database is conceive with the first download and datas will stay the same. If we load new datas watchlist reinitialise as well
+- Refine substitute's research. For now it's just a product from the same category with the same nutriscore.
