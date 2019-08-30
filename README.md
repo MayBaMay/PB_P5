@@ -3,7 +3,7 @@
 This application was conceived to help consumer to find healthy alternatives.
 <br/>It uses [Open Food Facts API](https://world.openfoodfacts.org])
 
-##How it works :
+## How it works :
 
 Make sure your environnement runs requirements
 
