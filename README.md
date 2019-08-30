@@ -27,6 +27,11 @@ Python3 pur_beurre.py
 
 ## How it works :
 
+## Create a MySQL connexion :
+
+* **DbAuth** in auth_db.py module :
+To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
+
 ### Get datas from Open Food Facts API into json files :
 
 The programm uses two classes to do so :
@@ -40,4 +45,6 @@ The programm uses two classes to do so :
 Program checks first if datas already had been loaded in the project in the '/data' folder.
 This method allows to create a condition to initialise API requests and MySQL tables creation
 2. Method **get_categories()** from **JsonAPI**
-If
+This method use HTTP library requests to get categories' informations from the API and save it in a 'data/categories.json' file
+3. Method **filtered_categories()** from ** SortedDatas**
+Once we have all categories datas, this method 
