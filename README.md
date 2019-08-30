@@ -34,11 +34,9 @@ To ensure all MySQL requests would be using the app credentials, a **DbAuth** cl
 
 ### Get datas from Open Food Facts API into json files :
 
------------- |
 The programm uses two classes to do so :
 * **JsonAPI** in json_api.py module :
 <br/>This module launches url requests to the API and stores datas in json files in a '/data' repository
------------- |  
 * **SortedDatas** in sort_datas.py module
 <br/>This module filters datas before and after getting datas from the API.
 
