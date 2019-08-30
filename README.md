@@ -36,4 +36,8 @@ The programm uses two classes to do so :
 <br/>This module filters datas before and after getting datas from the API.
 
 
-1. 
+1. Method **check_first()** from **JsonAPI**
+Program checks first if datas already had been loaded in the project in the '/data' folder.
+This method allows to create a condition to initialise API requests and MySQL tables creation
+2. Method **get_categories()** from **JsonAPI**
+If
