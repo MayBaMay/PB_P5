@@ -1,7 +1,7 @@
 # Find a substitute with Open Food Facts
 
 This application was conceived to help consumer to find healthy alternatives.
-It uses [Open Food Facts API][https://world.openfoodfacts.org]
+It uses [Open Food Facts API](https://world.openfoodfacts.org])
 
 
 ## How it works :
