@@ -9,18 +9,35 @@ from models.config import NB_CATEGORIES
 class Print:
     """All functions grouped in a Print class"""
 
+    @staticmethod
+    def licence_off():
+        paragraph = [
+            "\n",
+            "Bienvenu dans l'application Pur Beurre",
+            "Celle-ci vous permet de rechercher des produits",
+            "afin de trouver des substituts plus sains de la même catégorie",
+            "Cette application utilise les données d'Open Food Facts",
+            ]
+        for sentence in paragraph:
+            print(sentence)
+
 
     @staticmethod
     def menu():
         """Display main menu of Pur Beurre application"""
         rep = 0
         while True:
-            print("\n")
-            print("MENU PRINCIPAL")
-            print("1 - Quel aliment souhaitez vous remplacer ?")
-            print("2 - Retrouver mes aliments substitués")
-            print("3 - Quitter le programme")
-            print("\n")
+            paragraph = [
+                "\n",
+                "MENU PRINCIPAL",
+                "1 - Quel aliment souhaitez vous remplacer ?",
+                "2 - Retrouver mes aliments substitués",
+                "3 - Quitter le programme",
+                "\n"
+                ]
+            for sentence in paragraph:
+                print(sentence)
+
             rep = input("Votre Choix (1, 2 ou 3): ")
             try:
                 repint = int(rep)
@@ -36,11 +53,16 @@ class Print:
         """Display menu categories"""
         rep = 0
         while True:
-            print("CHOIX DE LA CATÉGORIE")
-            rep = input("Veuillez choisir une catégorie et entrer ici le chiffre correspondant \n \
-                (ou 'F' pour tapez une partie du nom pour affiner la requête)\n \
-                (ou '-1' pour revoir la liste des catégories)\n\
-                (ou '0' pour revenir au menu principal):\n ")
+            paragraph = [
+                "CHOIX DE LA CATÉGORIE",
+                "Veuillez choisir une catégorie et entrer ici le chiffre correspondant",
+                "ou 'F' pour tapez une partie du nom pour affiner la requête)",
+                "ou '-1' pour revoir la liste des catégories",
+                "ou '0' pour revenir au menu principal"
+                ]
+            for sentence in paragraph:
+                print(sentence)
+            rep = input("Votre Choix : ")
             print("\n")
             try:
                 repint = int(rep)
@@ -58,11 +80,16 @@ class Print:
         """Display menu Produits"""
         rep = 0
         while True:
-            print("CHOIX DU PRODUIT")
-            rep = input("Veuillez choisir un produit et entrer ici le chiffre correspondant \n \
-                (ou 'F' une partie du nom pour affiner la requête)\n \
-                (ou '-1' pour sélectionner une autre catégorie)\n \
-                (ou '0' pour revenir au menu principal): \n")
+            paragraph = [
+                "CHOIX DU PRODUIT",
+                "Veuillez choisir un produit et entrer ici le chiffre correspondant",
+                "ou 'F' une partie du nom pour affiner la requête",
+                "ou '-1' pour sélectionner une autre catégorie",
+                "ou '0' pour revenir au menu principal"
+                ]
+            for sentence in paragraph:
+                print(sentence)
+            rep = input("Votre Choix : ")
             print("\n")
             try:
                 int(rep)
@@ -75,10 +102,13 @@ class Print:
     def keyword_research():
         """Asks user to enter keyword for a keyword research"""
         rep = 0
-        print("FILTRER LA RECHERCHE")
-        rep = input("Veuillez entrer un mot clé pour préciser votre recherche \n \
-            (ou '-1' pour revoir la liste des catégories)\n\
-            (ou '0' pour revenir au menu principal):\n ")
+        paragraph = [
+            "FILTRER LA RECHERCHE",
+            "Veuillez entrer un mot clé pour préciser votre recherche",
+            "ou '-1' pour revoir la liste des catégories",
+            "ou '0' pour revenir au menu principal"
+            ]
+        rep = input("Votre Choix : ")
         print("\n")
         return rep
 
@@ -86,8 +116,8 @@ class Print:
     def prod_not_in_category():
         """Asks user's confirmation if he/she wants to display categories list"""
         rep = 0
-        rep = input("Le produit sélectionné ne fait pas partie de la catégorie choisie\n \
-                Pour sélectionner une autre catégorie tapez '1' sinon tapez entrée : ")
+        print("Le produit sélectionné ne fait pas partie de la catégorie choisie")
+        rep = input("Pour sélectionner une autre catégorie tapez '1' sinon tapez entrée : ")
         print("\n")
         return rep
 

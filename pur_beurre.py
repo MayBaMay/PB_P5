@@ -3,7 +3,7 @@
 
 """ Find a product's substitute with  Open Food Facts database"""
 
-
+from models.print import Print
 from models.auth_db import DbAuth
 from models.json_api import JsonAPI
 from models.sort_datas import SortedDatas
@@ -56,4 +56,5 @@ def game_on():
 
 if __name__ == "__main__":
 
+    Print.licence_off()
     game_on()

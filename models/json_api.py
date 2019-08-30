@@ -27,7 +27,6 @@ class JsonAPI:
         path = os.getcwd()
         if os.path.isdir(path + "/data"):
             self.first = False
-            print("Données actuellement dans la base")
         else:
             os.mkdir(path + "/data")
             self.first = True
