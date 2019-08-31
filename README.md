@@ -134,9 +134,6 @@ The programm uses two classes to do so :
     Method **prod_not_in_category()** :
 <br/>In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list or choose an other product number
 
-    Method **prod_not_in_category()** :
-<br/>Asks user's confirmation if he/she wants to display categories list
-
     Method **exit()** :
 <br/>Asks user's confirmation if he/she wants to quit the program
 
@@ -153,18 +150,23 @@ The programm uses two classes to do so :
 
     Method **main_menu()** :
 <br/>Process main menu's input
+<br/>It calls depending on user's input eather **get_categories_list()** or **get_watchlist()** or  **exit()**
 
     Methods **get_categories_list()** and **categories_menu()** :
 <br/>Get and display (with **result()** from Print class) categories datas from database and process user's input
+<br/>**categories_menu()** calls depending on user's input eather **main_menu()** or **get_categories_list()** or **get_products_list()**
 
-    Methods **get_products_list()**, **products_menu()** and **valid_product()**:
+    Methods **get_products_list()**, **valid_product()** and **products_menu()** :
 <br/>Get and display (with **result()** from Print class) products datas related to chosen category from database and process user's input (checking if products is related to the category)
+<br/> **products_menu()** checks if product is valid with **valid_product()** and calls depending on user's input eather **main_menu()** or **get_categories_list()** or **get_watchlist_in_category()**
+<br/>**valid_product()** calls depending on user's input eather **get_categories_list()** or comes back to **products_menu()**
 
     Method **keyword_research_menu()** :
 <br/>Process user's input while in keyword research menu
+<br/>It calls depending on user's input eather **main_menu()** or **get_categories_list()** or displays (with **result()** from Print class) list of products or categories containing the selected keyword in its name and come back to **categories_menu()** or **products_menu()**
 
-    Methods **get_substitute_list()** and **substitute_menu()**:
-<br/>Get and display (with **result()** from Print class) substitute datas and process user's input about saving it or not. The substitute is a products from the same category with the best nutriscore.
+    Methods **get_watchlist_in_category()**, **get_new_substitute()** and **substitute_menu()**:
+<br/>Get and display (with **result()** from Print class) substitutes datas and process user's input about saving it or not. The substitute is a products from the same category with the best nutriscore.
 
     Method **get_watchlist()** :
 <br/>Get and display (with **result()** from Print class) watchlist from database
@@ -172,5 +174,5 @@ The programm uses two classes to do so :
 
 Potential improvements :
 - Develop an update to the database from the Open Food Facts API or at least allow user to procede to an update. For now, all database is conceive with the first download and datas will stay the same. If we load new datas watchlist reinitialise as well
-- Refine substitute's research. For now it's just a product from the same category with the same nutriscore.
+- Refine substitute's research. For now it's just a product from the same category with a better nutriscore.
 - Use a graphic interface

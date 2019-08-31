@@ -99,6 +99,29 @@ class DbRead:
         Print.result(data, 'produis_list')
         self.products_menu()
 
+    def valid_product(self):
+        """This method checks if chosen products is in chosen category"""
+        # create list of product's numbers of chosen category
+        prod_int = int(self.prod_choice)
+        query = ("SELECT Produits.num \
+                FROM Produits \
+                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                WHERE Categories.num =  %s\
+                ")
+        cursor = self.connect.get_data(query, (self.cat_choice,))
+        data = cursor.fetchall()
+        num_list = []
+        for num in data:
+            num_list.append(num[0])
+
+        # check if input in the list
+        if prod_int not in num_list:
+            if Print.prod_not_in_category() == '-1':
+                self.get_categories_list()
+            else:
+                self.products_menu()
+
     def products_menu(self):
         """This method process user's choice when suppose to choose a product"""
         self.prod_choice = Print.product_choice()
@@ -130,33 +153,9 @@ class DbRead:
                     print("Vous avez choisi le produit suivant : ")
                     Print.result(data, 'produis_list')
                     self.get_watchlist_in_category()
-                    self.main_menu()
 
         except ValueError: # user choose 'F' keyword research
             self.keyword_research_menu(Print.keyword_research(), 'products')
-
-
-    def valid_product(self):
-        """This method checks if chosen products is in chosen category"""
-        # create list of product's numbers of chosen category
-        prod_int = int(self.prod_choice)
-        query = ("SELECT Produits.num \
-                FROM Produits \
-                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
-                WHERE Categories.num =  %s\
-                ")
-        cursor = self.connect.get_data(query, (self.cat_choice,))
-        data = cursor.fetchall()
-        num_list = []
-        for num in data:
-            num_list.append(num[0])
-
-        # check if input in the list
-        if prod_int not in num_list:
-            if Print.prod_not_in_category() == '-1':
-                self.get_categories_list()
-
 
     def keyword_research_menu(self, keyword, data_type):
         """Process user choice while asks for a keyword research"""
@@ -175,6 +174,7 @@ class DbRead:
                 data = cursor.fetchall()
                 if data != []:
                     Print.result(data, 'categories_details')
+                    self.categories_menu()
                 else:
                     print("Aucune catégorie contenant ce mot clé")
 
@@ -195,6 +195,7 @@ class DbRead:
                 data = cursor.fetchall()
                 if data != []:
                     Print.result(data, 'produis_list')
+                    self.products_menu()
                 else:
                     print("Aucun produit contenant ce mot clé")
 
