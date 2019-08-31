@@ -56,5 +56,5 @@ def game_on():
 
 if __name__ == "__main__":
 
-    Print.licence_off()
+    Print.welcome()
     game_on()

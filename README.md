@@ -29,9 +29,9 @@ Python3 pur_beurre.py
 
 ### I. Create a MySQL connexion :
 
-This program use MySQL.connetor as interface
+This program use MySQL.connetor as interface between Python and MySQL
 1. **DbAuth** in auth_db.py module :
-<br/>To ensure all MySQL requests would be using the app credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
+<br/>To ensure all MySQL requests would be using the app's credentials, a **DbAuth** class creates specified connector (**connect()**), cursor(**create_cursor()**) and commit(**commit()**).  
 
 ### II. Get datas from Open Food Facts API into json files :
 
@@ -173,6 +173,7 @@ The programm uses two classes to do so :
 <br/>Get and display (with **result()** from Print class) watchlist from database
 
 
-Potential mprovements :
+Potential improvements :
 - Develop an update to the database from the Open Food Facts API or at least allow user to procede to an update. For now, all database is conceive with the first download and datas will stay the same. If we load new datas watchlist reinitialise as well
 - Refine substitute's research. For now it's just a product from the same category with the same nutriscore.
+- Use a graphic interface

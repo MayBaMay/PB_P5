@@ -10,7 +10,8 @@ class Print:
     """All functions grouped in a Print class"""
 
     @staticmethod
-    def licence_off():
+    def welcome():
+        """Display a welcome message and mention OFF as source od datas"""
         paragraph = [
             "\n",
             "Bienvenu dans l'application Pur Beurre",
@@ -108,6 +109,8 @@ class Print:
             "ou '-1' pour revoir la liste des catégories",
             "ou '0' pour revenir au menu principal"
             ]
+        for sentence in paragraph:
+            print(sentence)
         rep = input("Votre Choix : ")
         print("\n")
         return rep
