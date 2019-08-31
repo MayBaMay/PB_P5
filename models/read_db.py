@@ -129,7 +129,7 @@ class DbRead:
                 if data != []:
                     print("Vous avez choisi le produit suivant : ")
                     Print.result(data, 'produis_list')
-                    self.get_substitute_list()
+                    self.get_watchlist_in_category()
                     self.main_menu()
 
         except ValueError: # user choose 'F' keyword research
@@ -198,8 +198,24 @@ class DbRead:
                 else:
                     print("Aucun produit contenant ce mot clé")
 
+    def get_watchlist_in_category(self):
+        """ This method get a substitute whith a better nutriscore from the same category"""
+        query = ("SELECT Produits.num,\
+                    Produits.product_name,\
+                    Produits.nutrition_grade_fr,\
+                    Produits.watchlist\
+                FROM Produits\
+                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                WHERE Categories.num = %s\
+                    AND Produits.watchlist IS NOT NULL\
+                ")
+        cursor = self.connect.get_data(query, (self.cat_choice,))
+        data = cursor.fetchall()
+        Print.result(data, 'show_substitutes_in_category')
+        self.get_new_substitute()
 
-    def get_substitute_list(self):
+    def get_new_substitute(self):
         """ This method get a substitute whith a better nutriscore from the same category"""
         query = ("SELECT Produits.num,\
                     Produits.product_name,\
@@ -214,6 +230,7 @@ class DbRead:
                 WHERE Produits.nutrition_grade_fr <=\
                     (SELECT Produits.nutrition_grade_fr FROM Produits WHERE Produits.num = %s)\
                     AND Categories.num = %s\
+                    AND Produits.watchlist IS NULL\
                 GROUP BY Produits.id\
                 ORDER BY Produits.nutrition_grade_fr\
                 LIMIT 1\
@@ -225,7 +242,7 @@ class DbRead:
         if data == []:
             print("Aucun substitut trouvé dans cette catégorie")
         else:
-            Print.result(data, 'show_substitute')
+            Print.result(data, 'show_new_substitute')
             self.substitute_menu(cursor, num_substitut)
 
     def substitute_menu(self, cursor, num_substitut):

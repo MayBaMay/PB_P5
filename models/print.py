@@ -186,8 +186,15 @@ class Print:
                 print("{:^4}   {:50}   {:50}   {:^10}".format(row[0], row[1], row[2], row[3]))
             print(" \n")
 
-        if data_type == 'show_substitute':
-            print("Substitut trouvé: ")
+        if data_type == 'show_substitutes_in_category':
+            print("SUBSTITUTS SAUVEGARDÉS DANS CETTE CATÉGORIE : ")
+            for row in data:
+                print("N° : {} |  | Nom : {} | Nutriscore : {} | Date de sauvegarde : {}".format(
+                    row[0], row[1], row[2], row[3]))
+            print(" \n")
+
+        if data_type == 'show_new_substitute':
+            print("NOUVELLE PROPOSITION : ")
             for row in data:
                 print("N° : {}\nNom : {}\nNutriscore : {}\nMarques : {}\n\
                     Points de vente : {}\nUrl : {}".format(
