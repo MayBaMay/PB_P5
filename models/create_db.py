@@ -61,7 +61,7 @@ class DbCreate:
             "   `brands` VARCHAR(80) NULL,"
             "   `stores` VARCHAR(80) NOT NULL,"
             "   `url` VARCHAR(255) NOT NULL,"
-            "   `favoris` DATE NULL,"
+            "   `watchlist` DATE NULL,"
             "   PRIMARY KEY (`num`, `id`))"
             "   ENGINE = InnoDB"
         )

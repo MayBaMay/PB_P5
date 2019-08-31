@@ -18,6 +18,7 @@ class Print:
             "Celle-ci vous permet de rechercher des produits",
             "afin de trouver des substituts plus sains de la même catégorie",
             "Cette application utilise les données d'Open Food Facts",
+            "\n"
             ]
         for sentence in paragraph:
             print(sentence)

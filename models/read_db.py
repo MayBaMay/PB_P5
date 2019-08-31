@@ -231,13 +231,13 @@ class DbRead:
     def substitute_menu(self, cursor, num_substitut):
         """Process user choice to save substitute"""
         if Print.save_substitute():
-            update_query = ("UPDATE Produits SET favoris = CURRENT_DATE WHERE num =  %s")
+            update_query = ("UPDATE Produits SET watchlist = CURRENT_DATE WHERE num =  %s")
             cursor.execute(update_query, (num_substitut,))
             self.connect.commit()
 
     def get_watchlist(self):
         """This method display the watchlist of substitutes"""
-        query = ("SELECT Produits.favoris,\
+        query = ("SELECT Produits.watchlist,\
                     Produits.num,\
                     Produits.product_name,\
                     Produits.nutrition_grade_fr,\
@@ -248,9 +248,9 @@ class DbRead:
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
                 INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
-                WHERE Produits.favoris IS NOT NULL\
+                WHERE Produits.watchlist IS NOT NULL\
                 GROUP BY Produits.id\
-                ORDER BY Produits.favoris DESC\
+                ORDER BY Produits.watchlist DESC\
                 ")
         cursor = self.connect.get_data(query)
         data = cursor.fetchall()
