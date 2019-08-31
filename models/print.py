@@ -120,7 +120,7 @@ class Print:
         """Asks user's confirmation if he/she wants to display categories list"""
         rep = 0
         print("Le produit sélectionné ne fait pas partie de la catégorie choisie")
-        rep = input("Pour sélectionner une autre catégorie tapez '1' sinon tapez entrée : ")
+        rep = input("Pour sélectionner une autre catégorie tapez '-1' sinon tapez entrée : ")
         print("\n")
         return rep
 

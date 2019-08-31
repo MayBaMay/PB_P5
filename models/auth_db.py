@@ -37,6 +37,16 @@ class DbAuth:
         """Generate a cursor with the same connexion"""
         return self.pb_connect.cursor()
 
+    def get_data(self, query, value=None):
+        """
+        Get data from database using methods from class instance DbAuth
+        """
+        cursor = self.create_cursor()
+        cursor.execute("USE dbPurBeurre")
+        cursor = self.create_cursor()
+        cursor.execute(query, value)
+        return cursor
+
     def commit(self):
         """Generate a commit with the same connexion"""
         return self.pb_connect.commit()
