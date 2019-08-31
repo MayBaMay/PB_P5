@@ -18,15 +18,12 @@ class DbRead:
         self.use_app = True
         self.cat_choice = ""
         self.prod_choice = ""
-        self.categories_list = []
-
 
     def exit(self):
         """
         This method returns to the application if user wants to quit or continu
         """
         return self.use_app
-
 
     def main_menu(self):
         """Process main menu of Pur Beurre application"""
@@ -54,9 +51,8 @@ class DbRead:
             FROM categories")
         cursor = self.connect.get_data(query)
         data = cursor.fetchall()
-        self.categories_list = data
 
-        Print.result(self.categories_list, 'list_categories')  # print list of categories
+        Print.result(data, 'list_categories')  # print list of categories
         self.categories_menu()  # call method to process the category's choice
 
     def categories_menu(self):
@@ -99,29 +95,6 @@ class DbRead:
         Print.result(data, 'produis_list')
         self.products_menu()
 
-    def valid_product(self):
-        """This method checks if chosen products is in chosen category"""
-        # create list of product's numbers of chosen category
-        prod_int = int(self.prod_choice)
-        query = ("SELECT Produits.num \
-                FROM Produits \
-                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
-                WHERE Categories.num =  %s\
-                ")
-        cursor = self.connect.get_data(query, (self.cat_choice,))
-        data = cursor.fetchall()
-        num_list = []
-        for num in data:
-            num_list.append(num[0])
-
-        # check if input in the list
-        if prod_int not in num_list:
-            if Print.prod_not_in_category() == '-1':
-                self.get_categories_list()
-            else:
-                self.products_menu()
-
     def products_menu(self):
         """This method process user's choice when suppose to choose a product"""
         self.prod_choice = Print.product_choice()
@@ -129,10 +102,8 @@ class DbRead:
             int(self.prod_choice)
             if self.prod_choice == '0':  # if user choose main menu
                 self.main_menu()
-
             elif self.prod_choice == '-1':  # if user choose category menu
                 self.get_categories_list()
-
             else:  # if user choose a product number
                 self.valid_product()  # check if product is in chosen category
                 query = ("SELECT Produits.num,\
@@ -153,9 +124,29 @@ class DbRead:
                     print("Vous avez choisi le produit suivant : ")
                     Print.result(data, 'produis_list')
                     self.get_watchlist_in_category()
-
         except ValueError: # user choose 'F' keyword research
             self.keyword_research_menu(Print.keyword_research(), 'products')
+
+    def valid_product(self):
+        """This method checks if chosen products is in chosen category"""
+        # create list of product's numbers of chosen category
+        prod_int = int(self.prod_choice)
+        query = ("SELECT Produits.num \
+                FROM Produits \
+                INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
+                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                WHERE Categories.num =  %s\
+                ")
+        cursor = self.connect.get_data(query, (self.cat_choice,))
+        data = cursor.fetchall()
+        num_list = []
+        for num in data:
+            num_list.append(num[0])
+
+        # check if input in the list
+        if prod_int not in num_list:
+            if Print.prod_not_in_category() == '-1':
+                self.get_categories_list()
 
     def keyword_research_menu(self, keyword, data_type):
         """Process user choice while asks for a keyword research"""
@@ -239,7 +230,6 @@ class DbRead:
         cursor = self.connect.get_data(query, (self.prod_choice, self.cat_choice,))
         data = cursor.fetchall()
         num_substitut = str(data[0][0])
-
         if data == []:
             print("Aucun substitut trouvé dans cette catégorie")
         else:
