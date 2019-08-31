@@ -132,7 +132,7 @@ The programm uses two classes to do so :
 <br/>or '0' to come back to main menu
 
     Method **prod_not_in_category()** :
-<br/>In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list or choose an other product number
+<br/>In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list (input '-1') or choose an other product number(any else input)
 
     Method **exit()** :
 <br/>Asks user's confirmation if he/she wants to quit the program
@@ -158,8 +158,8 @@ The programm uses two classes to do so :
 
     Methods **get_products_list()**, **valid_product()** and **products_menu()** :
 <br/>Get and display (with **result()** from Print class) products datas related to chosen category from database and process user's input (checking if products is related to the category)
-<br/> **products_menu()** checks if product is valid with **valid_product()** and calls depending on user's input eather **main_menu()** or **get_categories_list()** or **get_watchlist_in_category()**
-<br/>**valid_product()** calls depending on user's input eather **get_categories_list()** or comes back to **products_menu()**
+<br/> - **products_menu()** checks if product is valid with **valid_product()** and calls depending on user's input eather **main_menu()** or **get_categories_list()** or **get_watchlist_in_category()**
+<br/> - **valid_product()** calls depending on user's input eather **get_categories_list()** or comes back to **products_menu()**
 
     Method **keyword_research_menu()** :
 <br/>Process user's input while in keyword research menu
