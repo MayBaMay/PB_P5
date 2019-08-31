@@ -135,10 +135,10 @@ The programm uses two classes to do so :
 <br/>In case the chosen product doesn't belong to the chosen category, asks user's confirmation if he/she wants to display categories list (input '-1') or choose an other product number(any else input)
 
     Method **exit()** :
-<br/>Asks user's confirmation if he/she wants to quit the program
+<br/>Asks user's confirmation if he/she wants to quit the program, input '1' for yes, '2' for no
 
     Method **save_substitute()** :
-<br/>Asks user if he/she wants to save the substitute in get_watchlist
+<br/>Asks user if he/she wants to save the substitute in get_watchlist input '1' for yes, '2' for no
 
     Method **result()** :
 <br/>Formates and prints results for each type of requets
