@@ -11,12 +11,12 @@ MYSQL_PASSWD = "ratatouille"
 MYSQL_DATABASE = "dbPurBeurre"
 
 # Products by categories
-NB_PRODUCT = 20
-PRODUCTS_PER_PAGE = 20
+NB_PRODUCT = 150
+PRODUCTS_PER_PAGE = 50
 NB_PAGES = math.ceil(NB_PRODUCT/PRODUCTS_PER_PAGE)
 
 # Number of categories
-NB_CATEGORIES = 5
+NB_CATEGORIES = 20
 
 # Minimum number of products in a categorie to use it in app
 MINPRODINCAT = 10000
