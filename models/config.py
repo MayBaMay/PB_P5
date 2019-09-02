@@ -1,5 +1,5 @@
 
-""" This module define application's parameters"""
+""" This module defines application's parameters"""
 
 
 import math
