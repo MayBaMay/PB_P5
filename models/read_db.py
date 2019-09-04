@@ -85,7 +85,7 @@ class DbRead:
                     Produits.nutrition_grade_fr\
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                 WHERE Categories.num =  %s\
                 GROUP BY Produits.id\
                 ORDER BY Produits.num\
@@ -112,7 +112,7 @@ class DbRead:
                             Produits.nutrition_grade_fr\
                         FROM Produits\
                         INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                        INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                        INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                         WHERE Categories.num =  %s\
                             AND produits.num = %s\
                         GROUP BY Produits.id\
@@ -134,7 +134,7 @@ class DbRead:
         query = ("SELECT Produits.num \
                 FROM Produits \
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                 WHERE Categories.num =  %s\
                 ")
         cursor = self.connect.get_data(query, (self.cat_choice,))
@@ -165,9 +165,10 @@ class DbRead:
                 data = cursor.fetchall()
                 if data != []:
                     Print.result(data, 'categories_details')
-                    self.categories_menu()
                 else:
                     print("Aucune catégorie contenant ce mot clé")
+                    print("\n")
+                self.categories_menu()
 
             elif data_type == 'products':
                 query = ("SELECT Produits.num,\
@@ -176,7 +177,7 @@ class DbRead:
                             Produits.nutrition_grade_fr\
                         FROM Produits\
                         INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                        INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                        INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                         WHERE Categories.num =  %s\
                             AND produits.product_name like %s\
                         GROUP BY Produits.id\
@@ -198,7 +199,7 @@ class DbRead:
                     Produits.watchlist\
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                 WHERE Categories.num = %s\
                     AND Produits.watchlist IS NOT NULL\
                 ")
@@ -218,7 +219,7 @@ class DbRead:
                 	GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories\
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                 WHERE Produits.nutrition_grade_fr <=\
                     (SELECT Produits.nutrition_grade_fr FROM Produits WHERE Produits.num = %s)\
                     AND Categories.num = %s\
@@ -255,7 +256,7 @@ class DbRead:
                     GROUP_CONCAT(DISTINCT Categories.name,' ') AS categories\
                 FROM Produits\
                 INNER JOIN Asso_Prod_Cat ON Produits.id = Asso_Prod_Cat.id_produits\
-                INNER JOIN Categories ON Categories.num = Asso_Prod_Cat.num_categories\
+                INNER JOIN Categories ON Categories.id = Asso_Prod_Cat.id_categories\
                 WHERE Produits.watchlist IS NOT NULL\
                 GROUP BY Produits.id\
                 ORDER BY Produits.watchlist DESC\

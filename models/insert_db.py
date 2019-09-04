@@ -48,7 +48,7 @@ class DbInsert:
         """
 
         cursor = self.connect.create_cursor()
-        insert_query = "INSERT INTO Asso_Prod_Cat (num_categories, id_produits) \
+        insert_query = "INSERT INTO Asso_Prod_Cat (id_categories, id_produits) \
         VALUES (%s, %s)"
         cursor.executemany(insert_query, data)
         self.connect.commit()

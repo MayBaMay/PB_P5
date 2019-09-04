@@ -44,7 +44,7 @@ class DbCreate:
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Categories` ("
             "   `num` INT UNSIGNED AUTO_INCREMENT,"
-            "   `id` VARCHAR(80) NOT NULL,"
+            "   `id` VARCHAR(80) NOT NULL UNIQUE,"
             "   `name` VARCHAR(80) NOT NULL,"
             "   `url` VARCHAR(255) NOT NULL,"
             "   `products` INT NULL,"
@@ -68,12 +68,12 @@ class DbCreate:
 
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS `dbPurBeurre`.`Asso_Prod_Cat` ("
-            "   `num_categories` INT UNSIGNED,"
+        "   `id_categories` VARCHAR(80) NOT NULL,"
             "   `id_produits` VARCHAR(80) NOT NULL,"
-            "   PRIMARY KEY (`num_categories`, `id_produits`),"
-            "   CONSTRAINT `fk_num_categories`"
-            "       FOREIGN KEY (`num_categories`)"
-            "       REFERENCES `Categories` (`num`),"
+            "   PRIMARY KEY (`id_categories`, `id_produits`),"
+            "   CONSTRAINT `fk_id_categories`"
+            "       FOREIGN KEY (`id_categories`)"
+            "       REFERENCES `Categories` (`id`),"
             "   CONSTRAINT `fk_id_produits`"
             "       FOREIGN KEY (`id_produits`)"
             "       REFERENCES `Produits` (`id`))"

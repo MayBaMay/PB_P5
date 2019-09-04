@@ -25,7 +25,7 @@ class SortedDatas:
         self.categories_info = {}
 
         self.products_infos_list = []
-        self.categories_names_list = []
+        self.categories_id_list = []
         self.cat_prod_relation = []
 
 
@@ -85,7 +85,7 @@ class SortedDatas:
                                 "stores" : prod["stores"],
                                 "url" : prod["url"]
                                 })
-                            self.categories_names_list.append(prod["categories_hierarchy"])
+                            self.categories_id_list.append(prod["categories_hierarchy"])
                         except KeyError:
                             pass
 
@@ -117,29 +117,14 @@ class SortedDatas:
         wich links products and categories
         NB : a product can belong to more than one category
         """
-        categories_num_list = []
 
-        # recover categories number for each products from ids in Json categories_hierarchy
-        for categories in self.categories_names_list:
-            list_num_category_per_product = []
-            for category_id in categories:
-                cursor = self.connect.create_cursor()
-                name_cat_query = "SELECT num FROM Categories WHERE id = %s"
-                cursor.execute(name_cat_query, (category_id,))
-                data = cursor.fetchone()
-                if data is not None:
-                    list_num_category_per_product.append(data[0])
-            categories_num_list.append(list_num_category_per_product)
-
-        # Create a dictionnary with product's id and related category's number
         i = 0
         while i < len(self.products_infos_list)-1:
             product_id = self.products_infos_list[i]['id']   #get product's id
 
-            for category_num in categories_num_list[i]:  # get num category
-                category_num = str(category_num)
+            for category_id in self.categories_id_list[i]:  # get category's id
 
-                info_cat = (category_num, product_id)
+                info_cat = (category_id, product_id)
 
                 if info_cat not in self.cat_prod_relation:  # check if not duplication
                     self.cat_prod_relation.append(info_cat)
