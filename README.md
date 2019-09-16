@@ -77,7 +77,7 @@ Those two classes takes an instance of the class **DbAuth** in argument to get t
 <br/>First of all we have to ensure we won't add datas in already filled database. This method will reinitiate it.
 10. Method **create_tables()** from **DbCreate** :
 <br/>We create our tables.
-To see the database's model, click [here](https://github.com/MayBaMay/PB_P5/blob/master/Modèle_Pur_Beurre.pdf).
+To see the database's model, click [here](https://github.com/MayBaMay/PB_P5/blob/master/MPD_Pur_Beurre.pdf).
 
 #### Insert categories and products datas in database
 
