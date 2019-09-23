@@ -147,6 +147,8 @@ class DbRead:
         if prod_int not in num_list:
             if Print.prod_not_in_category() == '-1':
                 self.get_categories_list()
+            else:
+                self.products_menu()
 
     def keyword_research_menu(self, keyword, data_type):
         """Process user choice while asks for a keyword research"""
